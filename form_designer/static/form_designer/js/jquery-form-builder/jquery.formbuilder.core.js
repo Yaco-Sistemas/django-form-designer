@@ -46,7 +46,7 @@ var FormBuilder = {
 				backgroundColor : 'default'	
 			}
 		},
-		_id: '#container',
+		_id: '#formbuilderContainer',
 		_languages : [ 'en', 'zh_CN' ],
 		_builderPanel: '#builderPanel',
 		_builderForm: '#builderForm',

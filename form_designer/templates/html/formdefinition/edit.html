@@ -1,6 +1,7 @@
 {% extends "html/formdefinition/base.html" %}
 
-{% block head %}
+{% block extrahead %}
+{{ block.super }}
 <script type="text/javascript" src="{{ STATIC_URL }}form_designer/js/jquery-form-builder/lib/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}form_designer/js/jquery-form-builder/lib/jquery-ui-1.8.7.custom.min.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}form_designer/js/jquery-form-builder/lib/jquery.json-2.2.min.js"></script>
@@ -36,7 +37,7 @@
 </ul>
 {% endif %}
 
-<div id="container">
+<div id="formbuilderContainer">
     <div id="builderPalette">
         <div class="floatingPanelIdentifier"></div>
         <div class="floatingPanel">
@@ -123,7 +124,7 @@
 
 <script type="text/javascript">
     $(function() {
-        $('#container').formbuilder();
+        $('#formbuilderContainer').formbuilder();
         $('div.buttons').children().button();
     });
 </script>
