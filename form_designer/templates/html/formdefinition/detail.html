@@ -1,5 +1,44 @@
 {% extends "html/formdefinition/base.html" %}
 {% block content %}
+<link type="text/css" href="{{ STATIC_URL }}form_designer/css/jquery-form-builder/lib/smoothness/jquery-ui-1.8.7.custom.css" media="screen" rel="stylesheet" />
+<link type="text/css" href="{{ STATIC_URL }}form_designer/css/jquery-form-builder/lib/uni-form.css" media="screen" rel="stylesheet" />
+<link type="text/css" href="{{ STATIC_URL }}form_designer/css/jquery-form-builder/lib/default.uni-form.css" media="screen" rel="stylesheet" />
+<link type="text/css" href="{{ STATIC_URL }}form_designer/css/jquery-form-builder/lib/jquery.qtip.css" media="screen" rel="stylesheet" />
+
+<link type="text/css" href="{{ STATIC_URL }}form_designer/css/jquery-form-builder/jquery.formbuilder.core.css" media="screen" rel="stylesheet" />
+<link type="text/css" href="{{ STATIC_URL }}form_designer/css/jquery-form-builder/jquery.formbuilder.plaintext.css" media="screen" rel="stylesheet" />
+<link type="text/css" href="{{ STATIC_URL }}form_designer/css/jquery-form-builder/jquery.formbuilder.singlelinetext.css" media="screen" rel="stylesheet" />
+<link type="text/css" href="{{ STATIC_URL }}form_designer/css/jquery-form-builder/jquery.colorpicker.css" media="screen" rel="stylesheet" />
+<link type="text/css" href="{{ STATIC_URL }}form_designer/css/jquery-form-builder/jquery.fontpicker.css" media="screen" rel="stylesheet" />
+
+<style>
+{% for field in form_definition_fields %}
+{% if field.form_builder_settings.settings.styles %}
+{% if field.form_builder_settings.settings.styles.label %}
+#label_id_{{ field.name }} {
+    color: #{{field.form_builder_settings.settings.styles.label.color}} !important;
+    background-color: {{field.form_builder_settings.settings.styles.label.backgroundColor}} !important;
+}
+{% endif %}
+
+{% if field.form_builder_settings.settings.styles.description %}
+#hint_id_{{ field.name }} {
+    color: #{{field.form_builder_settings.settings.styles.description.color}} !important;
+    background-color: {{field.form_builder_settings.settings.styles.description.backgroundColor}} !important;
+}
+{% endif %}
+
+{% if field.form_builder_settings.settings.styles.value %}
+#id_{{ field.name }} {
+    color: #{{field.form_builder_settings.settings.styles.value.color}} !important;
+    background-color: {{field.form_builder_settings.settings.styles.value.backgroundColor}} !important;
+}
+{% endif %}
+{% endif %}
+
+{% endfor %}
+</style>
+
 {% if form_definition.title %}<h2>{{ form_definition.title }}</h2>{% endif %}
 {% if form_definition.body %}<p>{{ form_definition.body|linebreaksbr }}</p>{% endif %}
 {% if messages %}

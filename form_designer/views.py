@@ -64,7 +64,8 @@ def process_form(request, form_definition, extra_context={}, is_cms_plugin=False
         'form_error': form_error,
         'form_success': form_success,
         'form': form,
-        'form_definition': form_definition
+        'form_definition': form_definition,
+        'form_definition_fields': FormDefinitionField.objects.filter(form_definition=form_definition)
     })
     context.update(csrf(request))
     

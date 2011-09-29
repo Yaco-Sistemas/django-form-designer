@@ -1,11 +1,11 @@
 {% load friendly %}
-<form name="{{ form_definition.name }}" action="{{ form_definition.action }}" method="{{ form_definition.method }}" enctype="multipart/form-data">
+<form name="{{ form_definition.name }}" action="{{ form_definition.action }}" method="{{ form_definition.method }}" enctype="multipart/form-data" class="uniForm">
     <table>
         <thead>
             {% for field in form %}
                 {% if not field.is_hidden %}
                     <th class="{% if field.errors %}errors{% endif %}{% if field.field.required %}{% if field.errors %} {% endif %}required{% endif %}">
-                        <label for="{{ field.auto_id }}">{{ field.label }}</label>
+                        <label id="label_{{ field.auto_id }}" for="{{ field.auto_id }}">{{ field.label }}</label>
                     </th>
                 {% endif %}
             {% endfor %}
@@ -24,6 +24,7 @@
                     <td class="field {% if field.errors %}errors{% endif %}{% if field.field.required %}{% if field.errors %} {% endif %}required{% endif %}">
                         {{ field.errors }}
                         {{ field }}
+                        <span id="hint_{{ field.auto_id }}" class="formHint">{{ field.help_text }}</span>
                     </td>
                 {% endif %}
             {% endfor %}

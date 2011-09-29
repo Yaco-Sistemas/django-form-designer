@@ -229,7 +229,7 @@ class FormDefinitionField(models.Model):
         self.initial = initial
         self.help_text = help_text
 
-    def get_form_field_init_args(self):
+    def get_form_field_init_args(self, field_class):
         args = {
             'required': self.required,
             'label': self.label if self.label else '',
@@ -290,9 +290,15 @@ class FormDefinitionField(models.Model):
             })
 
         if self.widget:
-            args.update({
-                'widget': get_class(self.widget)()
-            })
+            widget = get_class(self.widget)
+        else:
+            widget = field_class.widget
+
+        uniform_class = 'textInput'
+
+        args.update({
+            'widget': widget(attrs={'class': uniform_class})
+        })
 
         return args
 

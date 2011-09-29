@@ -25,7 +25,8 @@ class DesignedForm(forms.Form):
                 def_field.initial = initial_data.get(def_field.name)
             else:
                 def_field.initial = initial_data.getlist(def_field.name)
-        field = get_class(def_field.field_class)(**def_field.get_form_field_init_args())
+        field_class = get_class(def_field.field_class)
+        field = field_class(**def_field.get_form_field_init_args(field_class))
         self.fields[def_field.name] = field
         if isinstance(field, forms.FileField):
             self.file_fields.append(def_field)
