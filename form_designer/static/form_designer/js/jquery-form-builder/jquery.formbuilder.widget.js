@@ -363,8 +363,8 @@ var FbWidget = {
 			$colorPicker.colorPicker({
 				name: options.name,
 				value: options.value,
-				ico: '../images/jquery.colourPicker.gif',
-				disabledIco: '../../images/jquery.colourPicker.disabled.gif',				
+				ico: '/static/form_designer/images/jquery.colourPicker.gif',
+				disabledIco: '/static/form_designer/images/jquery.colourPicker.disabled.gif',
 			  title: 'Basic Colors',
 			  disabled: this._getFbOptions().readOnly
 			});		
@@ -372,8 +372,8 @@ var FbWidget = {
 			$colorPicker.colorPicker({
 				name: name,
 				value: value,
-				ico: '../images/jquery.colourPicker.gif',				
-				disabledIco: '../../images/jquery.colourPicker.disabled.gif',	
+				ico: '/static/form_designer/images/jquery.colourPicker.gif',				
+				disabledIco: '/static/form_designer/images/jquery.colourPicker.disabled.gif',	
 			  title: 'Web Safe Colors',
 			  type: 'webSafe',
 			  width: 360,
