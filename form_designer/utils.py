@@ -26,58 +26,34 @@ def from_jquery_to_django_forms(form, form_data):
         field = FormDefinitionField.objects.get_or_create(name=field_data['name'],
                                                           form_definition=form)[0]
         field.field_class = FIELDS_MAPPING[field_data['type']]
-        field_settings = json.loads(field_data['settings'])['en']
-        if 'label' in field_settings:
-            field.label = field_settings['label']
-        if 'text' in field_settings:
-            field.help_text = field_settings['text']
-        if 'description' in field_settings:
-            field.help_text = field_settings['description']
-        if 'required' in field_settings:
-            field.required = field_settings['required']
-        if 'value' in field_settings:
-            field.initial = field_settings['value']
+        field_settings = json.loads(field_data['settings'])
+        if 'label' in field_settings['en']:
+            field.label = field_settings['en']['label']
+        if 'description' in field_settings['en']:
+            field.help_text = field_settings['en']['description']
+        if 'required' in field_settings['en']:
+            field.required = field_settings['en']['required']
+        if 'value' in field_settings['en']:
+            field.initial = field_settings['en']['value']
+        field.form_builder_settings = {
+            'settings': field_settings,
+            'sequence': field_data['sequence'],
+            'type': field_data['type'],
+            }
         field.save()
     form.save()
-
-
-def get_jquery_type_form_field(field):
-    if field.label is not None:
-        field_type = u'SingleLineText'
-    else:
-        field_type = u'PlainText'
-    return field_type
 
 
 def from_django_to_jquery_forms(fields):
     result = []
     for field in fields:
-        field_type = get_jquery_type_form_field(field)
-        dict_settings = {
-            'en': {
-                'styles': {
-                    'fontFamily': 'default',
-                    'fontSize': 'default',
-                    'fontStyles': [0, 0, 0]
-                    }
-                }
-            }
-        if field_type == u'SingleLineText':
-            dict_settings['en']['label'] = field.label
-            dict_settings['en']['value'] = field.initial
-            dict_settings['en']['description'] = field.help_text
-            dict_settings['en']['_persistable'] = True
-            dict_settings['en']['required'] = field.required
-            dict_settings['en']['restriction'] = 'no'
-        elif field_type == u'PlainText':
-            dict_settings['en']['text'] = field.help_text
-            dict_settings['en']['classes'] = ['leftAlign', 'topAlign']
         field_data = {
                 'id': field.id,
                 'name': field.name,
-                'type': field_type,
-                'dict_settings': dict_settings,
-                'settings': json.dumps(dict_settings),
+                'type': field.form_builder_settings['type'],
+                'dict_settings': field.form_builder_settings['settings'],
+                'settings': json.dumps(field.form_builder_settings['settings']),
+                'sequence': field.form_builder_settings['sequence']
             }
         result.append(field_data)
     return result

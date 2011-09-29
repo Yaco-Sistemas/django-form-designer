@@ -208,6 +208,8 @@ class FormDefinitionField(models.Model):
     choice_model = ModelNameField(_('Data model'), max_length=255, blank=True, null=True, choices=choice_model_choices, help_text=('your_app.models.ModelName' if not choice_model_choices else None))
     choice_model_empty_label = models.CharField(_('Empty label'), max_length=255, blank=True, null=True)
 
+    form_builder_settings = PickledObjectField(default=None, null=True)
+
     class Meta:
         verbose_name = _('Field')
         verbose_name_plural = _('Fields')
