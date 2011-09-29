@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, get_or_create, render_to_response
+from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
 from django.http import HttpResponseRedirect
@@ -83,7 +83,7 @@ def _form_detail_view(request, form_definition):
     return render_to_response('html/formdefinition/detail.html', result,
         context_instance=RequestContext(request))
 
-def _form_edit_view(request, form_definition):
+def _form_edit_view(request, form_definition, is_new):
     result = process_form(request, form_definition)
     # TODO
     return render_to_response('html/formdefinition/edit.html', result,
@@ -98,9 +98,9 @@ def detail_by_hash(request, public_hash):
     return _form_detail_view(request, form_definition) 
 
 def edit(request, object_name):
-    form_definition = get_or_create(FormDefinition, name=object_name, require_hash=False)
-    return _form_edit_view(request, form_definition)
+    form_definition, created = FormDefinition.objects.get_or_create(name=object_name, require_hash=False)
+    return _form_edit_view(request, form_definition, created)
 
 def edit_by_hash(request, public_hash):
-    form_definition = get_or_create(FormDefinition, public_hash=public_hash)
-    return _form_edit_view(request, form_definition)
+    form_definition, created = FormDefinition.objects.get_or_create(public_hash=public_hash)
+    return _form_edit_view(request, form_definition, created)
