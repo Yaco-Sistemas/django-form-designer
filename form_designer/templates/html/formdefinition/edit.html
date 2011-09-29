@@ -75,7 +75,7 @@
             </div>
         </div>
     </div>
-    <form id="builderForm" action="#" class="uniForm">
+    <form id="builderForm" method="POST" action="{% url form_designer_save form_definition.name %}" class="uniForm">
         <input type="hidden" id="name" name="name" />
         <input type="hidden" id="settings" name="settings" />
         <div id="builderPanel">

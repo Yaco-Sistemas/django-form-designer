@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render_to_response
+from django.shortcuts import get_object_or_404, render_to_response, redirect
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
 from django.http import HttpResponseRedirect
@@ -14,6 +14,7 @@ from datetime import datetime
 from form_designer.forms import DesignedForm
 from form_designer.models import FormDefinition, FormLog
 from form_designer.uploads import handle_uploaded_files
+from form_designer.utils import from_jquery_to_django_forms
 
 
 def process_form(request, form_definition, extra_context={}, is_cms_plugin=False):
@@ -104,3 +105,13 @@ def edit(request, object_name):
 def edit_by_hash(request, public_hash):
     form_definition, created = FormDefinition.objects.get_or_create(public_hash=public_hash)
     return _form_edit_view(request, form_definition, created)
+
+def save(request, object_name):
+    if request.method != 'POST':
+        response = HttpResponse('Method not allowed: %s' % request.method)
+        response.status_code = 405
+        return response
+    form = FormDefinition.objects.get_or_create(name=object_name)[0]
+    from_jquery_to_django_forms(form, request.POST)
+    # TODO
+    return redirect('form_designer_detail', object_name=object_name)
