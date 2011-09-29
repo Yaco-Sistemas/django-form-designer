@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render_to_response, redirect
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.conf import settings
 from form_designer import settings as app_settings
 from django.contrib import messages
@@ -12,9 +12,9 @@ import random
 from datetime import datetime
 
 from form_designer.forms import DesignedForm
-from form_designer.models import FormDefinition, FormLog
+from form_designer.models import FormDefinition, FormLog, FormDefinitionField
 from form_designer.uploads import handle_uploaded_files
-from form_designer.utils import from_jquery_to_django_forms
+from form_designer.utils import from_jquery_to_django_forms, from_django_to_jquery_forms
 
 
 def process_form(request, form_definition, extra_context={}, is_cms_plugin=False):
@@ -85,9 +85,10 @@ def _form_detail_view(request, form_definition):
         context_instance=RequestContext(request))
 
 def _form_edit_view(request, form_definition, is_new):
-    result = process_form(request, form_definition)
-    # TODO
-    return render_to_response('html/formdefinition/edit.html', result,
+    context = process_form(request, form_definition)
+    fields = FormDefinitionField.objects.filter(form_definition=form_definition)
+    context['fields'] = from_django_to_jquery_forms(fields)
+    return render_to_response('html/formdefinition/edit.html', context,
         context_instance=RequestContext(request))
 
 def detail(request, object_name):
