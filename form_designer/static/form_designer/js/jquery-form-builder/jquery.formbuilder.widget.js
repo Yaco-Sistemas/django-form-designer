@@ -488,38 +488,41 @@ var FbWidget = {
 	  $colorPanel.find('input:first').addClass('floatClearLeft');
 	  return $colorPanel;
   },
-  //label.color, label.backgroundColor, value.color, value.backgroundColor, description.color, description.backgroundColor
-  _labelValueDescriptionColorPanel: function(options) {
-	  var o = $.extend({}, options);
-	  var fbStyles = this._getFbOptions().settings.styles;
-	  if (o.label.color == 'default') {
-		  o.label.color = fbStyles.color;
-	    } 	  
-	  if (o.label.backgroundColor == 'default') {
-		  o.label.backgroundColor = fbStyles.backgroundColor;
-	    } 	 
-	  if (o.description.color == 'default') {
-		  o.description.color = fbStyles.color;
-	    } 	  
-	  if (o.description.backgroundColor == 'default') {
-		  o.description.backgroundColor = fbStyles.backgroundColor;
-	    } 	 	  
-	  var $colorPanel = this._fieldset({ text: 'Colors' })
-	  .append(this._threeColumns($('<div></div>'), $('<div>Text</div>'), $('<div>Background</div>')).css('paddingBottom', '2px'))
-		.append(this._threeColumns($('<div>Label</div>'),
-				    this._colorPicker({ name: 'field.label.color', value: o.label.color }),
-			      this._colorPicker({ name: 'field.label.backgroundColor', value: o.label.backgroundColor })))
-		.append(this._threeColumns($('<div>Value</div>'),
-				    this._colorPicker({ name: 'field.value.color', value: o.value.color }),
-			      this._colorPicker({ name: 'field.value.backgroundColor', value: o.value.backgroundColor })))
-		.append(this._threeColumns($('<div>Description</div>'),
-				    this._colorPicker({ name: 'field.description.color', value: o.description.color }),
-			      this._colorPicker({ name: 'field.description.backgroundColor', value: o.description.backgroundColor })));
-	  $colorPanel.css('paddingTop', '0.5em');
-	  $('input', $colorPanel).addClass('floatClearLeft');
-	  $('.col1', $colorPanel).css('verticalAlign', 'top');
-	  return $colorPanel;
-  },
+    //label.color, label.backgroundColor, value.color, value.backgroundColor, description.color, description.backgroundColor
+    _labelValueDescriptionColorPanel: function(options) {
+        var o = $.extend({}, options);
+        var fbStyles = this._getFbOptions().settings.styles;
+        if (o.label){
+            if (o.label.color == 'default') {
+                o.label.color = fbStyles.color;
+                }
+            if (o.label.backgroundColor == 'default') {
+                o.label.backgroundColor = fbStyles.backgroundColor;
+                }
+        }
+        if (o.description) {
+            if (o.description.color == 'default') {
+                o.description.color = fbStyles.color;
+                }
+            if (o.description.backgroundColor == 'default') {
+                o.description.backgroundColor = fbStyles.backgroundColor;
+                }
+        }
+        var $colorPanel = this._fieldset({ text: 'Colors' }).append(this._threeColumns($('<div></div>'), $('<div>Text</div>'), $('<div>Background</div>')).css('paddingBottom', '2px'))
+        if (o.label) {
+            $colorPanel = $colorPanel.append(this._threeColumns($('<div>Label</div>'), this._colorPicker({ name: 'field.label.color', value: o.label.color }), this._colorPicker({ name: 'field.label.backgroundColor', value: o.label.backgroundColor })))
+        }
+        if (o.value) {
+            $colorPanel = $colorPanel.append(this._threeColumns($('<div>Value</div>'), this._colorPicker({ name: 'field.value.color', value: o.value.color }), this._colorPicker({ name: 'field.value.backgroundColor', value: o.value.backgroundColor })))
+        }
+        if (o.description) {
+            $colorPanel = $colorPanel.append(this._threeColumns($('<div>Description</div>'), this._colorPicker({ name: 'field.description.color', value: o.description.color }), this._colorPicker({ name: 'field.description.backgroundColor', value: o.description.backgroundColor })));
+        }
+        $colorPanel.css('paddingTop', '0.5em');
+        $('input', $colorPanel).addClass('floatClearLeft');
+        $('.col1', $colorPanel).css('verticalAlign', 'top');
+        return $colorPanel;
+    },
   _getWidget: function(event, fb) {
   	 $.fb.fbWidget.prototype._log('getWidget(event, fb) should be overriden by subclass.');
    },
