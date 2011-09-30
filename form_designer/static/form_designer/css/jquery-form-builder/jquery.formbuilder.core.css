@@ -105,6 +105,7 @@ div.ctrlHolder { padding: 1em }
 /* Field Settings Panel */
 #fieldSettings {
 	padding: 1em;
+    overflow: auto;
 }
 
 #fieldSettings fieldset, #formSettings fieldset { padding: 1em; border: 1px solid #C0C0C0; margin-bottom: 1em }
