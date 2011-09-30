@@ -294,7 +294,7 @@ class FormDefinitionField(models.Model):
         else:
             widget = field_class.widget
 
-        uniform_class = 'textInput'
+        uniform_class = '' #'textInput'
 
         args.update({
             'widget': widget(attrs={'class': uniform_class})

@@ -8,6 +8,7 @@ FIELDS_MAPPING = {
         u'PlainText': 'django.forms.CharField',
         u'SingleFileUpload': 'django.forms.FileField',
         u'CheckBox': 'django.forms.BooleanField',
+        u'Select': 'django.forms.ChoiceField',
     }
 
 
@@ -33,10 +34,18 @@ def from_jquery_to_django_forms(form, form_data):
             field.label = field_settings['en']['label']
         if 'description' in field_settings['en']:
             field.help_text = field_settings['en']['description']
-        if 'required' in field_settings['en']:
-            field.required = field_settings['en']['required']
+        if 'required' in field_settings:
+            field.required = field_settings['required']
         if 'value' in field_settings['en']:
             field.initial = field_settings['en']['value']
+        if 'options' in field_settings:
+            choice_labels = []
+            choice_values = []
+            for opt in field_settings['options']:
+                choice_labels.append(opt[0])
+                choice_values.append(opt[1])
+            field.choice_labels = "\n".join(choice_labels)
+            field.choice_values = "\n".join(choice_values)
         field.form_builder_settings = {
             'settings': field_settings,
             'sequence': field_data['sequence'],

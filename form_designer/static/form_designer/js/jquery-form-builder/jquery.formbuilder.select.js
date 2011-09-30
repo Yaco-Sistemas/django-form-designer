@@ -31,6 +31,7 @@ var FbSelect = $.extend({}, $.fb.fbWidget.prototype, {
                 }
             },
             required: false,
+            options: [],
             styles: {
                 label: {
                     color: 'default',
@@ -179,16 +180,20 @@ var FbSelect = $.extend({}, $.fb.fbWidget.prototype, {
                 optionName = fieldset.find('#addOptionName'),
                 optionValue = fieldset.find('#addOptionValue'),
                 option, select;
-            if (optionName !== '') {
+            if (optionName[0].value !== '') {
                 select = fb.item.find('select')[0];
                 option = '<option value="' + optionValue[0].value + '">' + optionName[0].value + '</option>';
+                fb.settings.options.push([optionName[0].value, optionValue[0].value]);
                 optionValue[0].value = '';
                 optionName[0].value = '';
                 select.innerHTML += option;
+                fb.target._updateSettings(fb.item);
             }
         });
         $('#resetOptionsButton', $addOption).css('cursor', 'pointer').css('float', 'right').css('text-decoration', 'underline').css('margin-top', '10px').click(function(event) {
             select = fb.item.find('select').text('');
+            fb.settings.options = [];
+            fb.target._updateSettings(fb.item);
         });
 
         var styles = fb.settings.styles;

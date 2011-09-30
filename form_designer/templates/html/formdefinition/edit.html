@@ -102,6 +102,14 @@
                         <p class="formHint">{{ field.dict_settings.en.description }}</p>
                         {% endif %}{% if field.type == 'PlainText' %}
                         {{ field.dict_settings.en.text }}
+                        {% endif %}{% if field.type == 'Select' %}
+                        <label><em>{% if field.dict_settings.required %}*{% endif %}</em><span>{{ field.dict_settings.en.label }}</span></label>
+                        <select class="select">
+                            {% for opt in field.dict_settings.options %}
+                            <option value="{{ opt.1 }}">{{ opt.0 }}</option>
+                            {% endfor %}
+                        <select/>
+                        <p class="formHint">{{ field.dict_settings.en.description }}</p>
                         {% endif %}
                     </div>
                     <div class="fieldProperties">
