@@ -1,5 +1,5 @@
 /*
-* JQuery Form Builder - Single File plugin.
+* JQuery Form Builder - Check Box field plugin.
 *
 * Revision: 1
 * Version: 0.1
@@ -16,7 +16,7 @@ var FbCheckBox = $.extend({}, $.fb.fbWidget.prototype, {
         belongsTo: $.fb.formbuilder.prototype.options._standardFieldsPanel,
         _type: 'CheckBox',
         _html: '<div><label><em></em><span></span></label> \
-                <input type="checkbox" /> \
+                <input type="checkbox" class="checkBox" /> \
                 <p class="formHint"></p></div>',
         _counterField: 'label',
         _languages: [ 'en' ],
@@ -97,11 +97,11 @@ var FbCheckBox = $.extend({}, $.fb.fbWidget.prototype, {
         $("input[id$='field.bold']", $fontPanel).change(function(event) {
             if ($(this).attr('checked')) {
                 fb.item.find('label').css('fontWeight', 'bold');
-                fb.item.find('.fileUpload').css('fontWeight', 'bold');
+                fb.item.find('.checkBox').css('fontWeight', 'bold');
                 styles.fontStyles[0] = 1;
             } else {
                 fb.item.find('label').css('fontWeight', 'normal');
-                fb.item.find('.fileUpload').css('fontWeight', 'normal');
+                fb.item.find('.checkBox').css('fontWeight', 'normal');
                 styles.fontStyles[0] = 0;
             }
             fb.target._updateSettings(fb.item);
@@ -109,11 +109,11 @@ var FbCheckBox = $.extend({}, $.fb.fbWidget.prototype, {
         $("input[id$='field.italic']", $fontPanel).change(function(event) {
             if ($(this).attr('checked')) {
                 fb.item.find('label').css('fontStyle', 'italic');
-                fb.item.find('.fileUpload').css('fontStyle', 'italic');
+                fb.item.find('.checkBox').css('fontStyle', 'italic');
                 styles.fontStyles[1] = 1;
             } else {
                 fb.item.find('label').css('fontStyle', 'normal');
-                fb.item.find('.fileUpload').css('fontStyle', 'normal');
+                fb.item.find('.checkBox').css('fontStyle', 'normal');
                 styles.fontStyles[1] = 0;
             }
             fb.target._updateSettings(fb.item);
@@ -121,11 +121,11 @@ var FbCheckBox = $.extend({}, $.fb.fbWidget.prototype, {
         $("input[id$='field.underline']", $fontPanel).change(function(event) {
             if ($(this).attr('checked')) {
                 fb.item.find('label span').css('textDecoration', 'underline');
-                fb.item.find('.fileUpload').css('textDecoration', 'underline');
+                fb.item.find('.checkBox').css('textDecoration', 'underline');
                 styles.fontStyles[2] = 1;
             } else {
                 fb.item.find('label span').css('textDecoration', 'none');
-                fb.item.find('.fileUpload').css('textDecoration', 'none');
+                fb.item.find('.checkBox').css('textDecoration', 'none');
                 styles.fontStyles[2] = 0;
             }
             fb.target._updateSettings(fb.item);
@@ -134,7 +134,7 @@ var FbCheckBox = $.extend({}, $.fb.fbWidget.prototype, {
         $("input[id$='field.fontFamily']", $fontPanel).change(function(event) {
             var value = $(this).val();
             fb.item.css('fontFamily', value);
-            fb.item.find('.fileUpload').css('fontFamily', value);
+            fb.item.find('.checkBox').css('fontFamily', value);
             styles.fontFamily = value;
             fb.target._updateSettings(fb.item);
         });
@@ -142,7 +142,7 @@ var FbCheckBox = $.extend({}, $.fb.fbWidget.prototype, {
         $("select[id$='field.fontSize']", $fontPanel).change(function(event) {
             var value = $(this).val();
             fb.item.find('label').css('fontSize', value + 'px');
-            fb.item.find('.fileUpload').css('fontSize', value + 'px');
+            fb.item.find('.checkBox').css('fontSize', value + 'px');
             styles.fontSize = value;
             fb.target._updateSettings(fb.item);
         });
@@ -217,7 +217,7 @@ var FbCheckBox = $.extend({}, $.fb.fbWidget.prototype, {
 
         fb.item.find('label').css('fontWeight', fontWeight).css('fontStyle', fontStyle).css('fontSize', fontSize + 'px');
 
-        fb.item.find('.fileUpload').val(fb.settings.value).css('fontWeight', fontWeight).css('fontStyle', fontStyle).css('textDecoration', textDecoration).css('fontFamily', fontFamily).css('fontSize', fontSize + 'px');
+        fb.item.find('.checkBox').val(fb.settings.value).css('fontWeight', fontWeight).css('fontStyle', fontStyle).css('textDecoration', textDecoration).css('fontFamily', fontFamily).css('fontSize', fontSize + 'px');
 
         fb.item.find('.formHint').text(fb.settings.description);
         fb.target._log('fbCheckBox.languageChange executed.');
