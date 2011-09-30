@@ -168,11 +168,13 @@ var FbSelect = $.extend({}, $.fb.fbWidget.prototype, {
 
         var $addOption = $('<div><label for="addOptionName">Name</label>&nbsp;<input id="addOptionName" type="text" />\
             <label for="addOptionValue">Value</label>&nbsp;<input id="addOptionValue" type="text" />\
-            <span id="addOptionButton">Add option</span></div>');
+            <span id="addOptionButton">Add option</span>\
+            <div style="clear: both;"></div>\
+            <span id="resetOptionsButton">Reset all options</span></div>');
         var $optionPanel = fb.target._fieldset({
             text: 'Options'
         }).append(fb.target._oneColumn($addOption));
-        $('span', $addOption).css('cursor', 'pointer').css('float', 'right').css('text-decoration', 'underline').css('margin-top', '5px').click(function(event) {
+        $('#addOptionButton', $addOption).css('cursor', 'pointer').css('float', 'right').css('text-decoration', 'underline').css('margin-top', '5px').click(function(event) {
             var fieldset = $(this.parentNode.parentNode),
                 optionName = fieldset.find('#addOptionName'),
                 optionValue = fieldset.find('#addOptionValue'),
@@ -184,6 +186,9 @@ var FbSelect = $.extend({}, $.fb.fbWidget.prototype, {
                 optionName[0].value = '';
                 select.innerHTML += option;
             }
+        });
+        $('#resetOptionsButton', $addOption).css('cursor', 'pointer').css('float', 'right').css('text-decoration', 'underline').css('margin-top', '10px').click(function(event) {
+            select = fb.item.find('select').text('');
         });
 
         var styles = fb.settings.styles;
