@@ -6,6 +6,7 @@ from form_designer.models import FormDefinitionField
 FIELDS_MAPPING = {
         u'SingleLineText': 'django.forms.CharField',
         u'PlainText': 'django.forms.CharField',
+        u'SingleFileUpload': 'django.forms.FileField',
     }
 
 
