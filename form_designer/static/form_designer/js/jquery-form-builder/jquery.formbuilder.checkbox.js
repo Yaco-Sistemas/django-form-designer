@@ -10,19 +10,19 @@
 * Date: 30-Sep-2011
 */
 
-var FbSingleFileUpload = $.extend({}, $.fb.fbWidget.prototype, {
+var FbCheckBox = $.extend({}, $.fb.fbWidget.prototype, {
     options: { // default options. values are stored in widget's prototype
-        name: 'Single File Upload',
+        name: 'Check Box',
         belongsTo: $.fb.formbuilder.prototype.options._standardFieldsPanel,
-        _type: 'SingleFileUpload',
+        _type: 'CheckBox',
         _html: '<div><label><em></em><span></span></label> \
-                <input type="file" class="fileUpload" /> \
+                <input type="checkbox" /> \
                 <p class="formHint"></p></div>',
         _counterField: 'label',
         _languages: [ 'en' ],
         settings: {
             en: {
-                label: 'Single File Upload',
+                label: 'Check Box',
                 description: '',
                 styles: {
                     fontFamily: 'default', // form builder default
@@ -51,17 +51,17 @@ var FbSingleFileUpload = $.extend({}, $.fb.fbWidget.prototype, {
     },
     _getWidget : function(event, fb) {
         var $jqueryObject = $(fb.target.options._html);
-        fb.target._log('fbSingleFileUpload._getWidget executing...');
+        fb.target._log('fbCheckBox._getWidget executing...');
         $('label span', $jqueryObject).text(fb.settings.label);
         if (fb._settings.required) {
             $('label em', $jqueryObject).text('*');
         }
         $('.formHint', $jqueryObject).text(fb.settings.description);
-        fb.target._log('fbSingleFileUpload._getWidget executed.');
+        fb.target._log('fbCheckBox._getWidget executed.');
         return $jqueryObject;
     },
     _getFieldSettingsLanguageSection : function(event, fb) {
-        fb.target._log('fbSingleFileUpload._getFieldSettingsLanguageSection executing...');
+        fb.target._log('fbCheckBox._getFieldSettingsLanguageSection executing...');
         var $label = fb.target._label({
             label: 'Label',
             name: 'field.label'
@@ -146,11 +146,11 @@ var FbSingleFileUpload = $.extend({}, $.fb.fbWidget.prototype, {
             styles.fontSize = value;
             fb.target._updateSettings(fb.item);
         });
-        fb.target._log('fbSingleFileUpload._getFieldSettingsLanguageSection executed.');
+        fb.target._log('fbCheckBox._getFieldSettingsLanguageSection executed.');
         return [fb.target._oneColumn($label), fb.target._oneColumn($description), $fontPanel];
     },
     _getFieldSettingsGeneralSection : function(event, fb) {
-        fb.target._log('fbSingleFileUpload._getFieldSettingsGeneralSection executing...');
+        fb.target._log('fbCheckBox._getFieldSettingsGeneralSection executing...');
         var $required = $('<div><input type="checkbox" id="field.required" />&nbsp;Required</div>');
         var $valuePanel = fb.target._fieldset({
             text: 'Value'
@@ -199,11 +199,11 @@ var FbSingleFileUpload = $.extend({}, $.fb.fbWidget.prototype, {
             styles.description.backgroundColor = value;
             fb.target._updateSettings(fb.item);
         });
-        fb.target._log('fbSingleFileUpload._getFieldSettingsGeneralSection executed.');
+        fb.target._log('fbCheckBox._getFieldSettingsGeneralSection executed.');
         return [$valuePanel, $colorPanel];
     },
     _languageChange : function(event, fb) {
-        fb.target._log('fbSingleFileUpload.languageChange executing...');
+        fb.target._log('fbCheckBox.languageChange executing...');
         var styles = fb.settings.styles;
         var fbStyles = fb.target._getFbLocalizedSettings().styles;
         var fontFamily = styles.fontFamily != 'default' ? styles.fontFamily : fbStyles.fontFamily;
@@ -220,8 +220,8 @@ var FbSingleFileUpload = $.extend({}, $.fb.fbWidget.prototype, {
         fb.item.find('.fileUpload').val(fb.settings.value).css('fontWeight', fontWeight).css('fontStyle', fontStyle).css('textDecoration', textDecoration).css('fontFamily', fontFamily).css('fontSize', fontSize + 'px');
 
         fb.item.find('.formHint').text(fb.settings.description);
-        fb.target._log('fbSingleFileUpload.languageChange executed.');
+        fb.target._log('fbCheckBox.languageChange executed.');
     }
 });
 
-$.widget('fb.fbSingleFileUpload', FbSingleFileUpload);
+$.widget('fb.fbCheckBox', FbCheckBox);
