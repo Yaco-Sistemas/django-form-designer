@@ -7,6 +7,7 @@ FIELDS_MAPPING = {
         u'SingleLineText': 'django.forms.CharField',
         u'PlainText': 'django.forms.CharField',
         u'SingleFileUpload': 'django.forms.FileField',
+        u'CheckBox': 'django.forms.BooleanField',
     }
 
 

@@ -88,12 +88,16 @@
                     </a>
                     <div class="{{field.type}} {% if field.dict_settings.en.classes %}{% for class in  field.dict_settings.en.classes %}{{ class }} {% endfor %}{% endif %}">
                         {% if field.type == 'SingleLineText' %}
-                        <label><em>*</em><span>{{ field.dict_settings.en.label }}</span></label>
+                        <label><em>{% if field.dict_settings.required %}*{% endif %}</em><span>{{ field.dict_settings.en.label }}</span></label>
                         <input type="text" class="textInput" value={{ field.dict_settings.en.value }} />
                         <p class="formHint">{{ field.dict_settings.en.description }}</p>
                         {% endif %}{% if field.type == 'SingleFileUpload' %}
-                        <label><em>*</em><span>{{ field.dict_settings.en.label }}</span></label>
+                        <label><em>{% if field.dict_settings.required %}*{% endif %}</em><span>{{ field.dict_settings.en.label }}</span></label>
                         <input type="file" class="fielUpload" />
+                        <p class="formHint">{{ field.dict_settings.en.description }}</p>
+                        {% endif %}{% if field.type == 'CheckBox' %}
+                        <label><em>{% if field.dict_settings.required %}*{% endif %}</em><span>{{ field.dict_settings.en.label }}</span></label>
+                        <input type="checkbox" />
                         <p class="formHint">{{ field.dict_settings.en.description }}</p>
                         {% endif %}{% if field.type == 'PlainText' %}
                         {{ field.dict_settings.en.text }}
