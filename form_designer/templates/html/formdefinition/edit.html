@@ -13,6 +13,9 @@
 <script type="text/javascript" src="{{ STATIC_URL }}form_designer/js/jquery-form-builder/jquery.formbuilder.singlefileupload.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}form_designer/js/jquery-form-builder/jquery.formbuilder.checkbox.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}form_designer/js/jquery-form-builder/jquery.formbuilder.select.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}form_designer/js/jquery-form-builder/jquery.formbuilder.email.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}form_designer/js/jquery-form-builder/jquery.formbuilder.textfield.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}form_designer/js/jquery-form-builder/jquery.formbuilder.date.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}form_designer/js/jquery-form-builder/jquery.colorpicker.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}form_designer/js/jquery-form-builder/jquery.fontpicker.js"></script>
 
@@ -109,6 +112,14 @@
                             <option value="{{ opt.1 }}">{{ opt.0 }}</option>
                             {% endfor %}
                         <select/>
+                        <p class="formHint">{{ field.dict_settings.en.description }}</p>
+                        {% endif %}{% if field.type == 'Email' %}
+                        <label><em>{% if field.dict_settings.required %}*{% endif %}</em><span>{{ field.dict_settings.en.label }}</span></label>
+                        <input type="text" class="textInput" value={{ field.dict_settings.en.value }} />
+                        <p class="formHint">{{ field.dict_settings.en.description }}</p>
+                        {% endif %}{% if field.type == 'TextField' %}
+                        <label><em>{% if field.dict_settings.required %}*{% endif %}</em><span>{{ field.dict_settings.en.label }}</span></label>
+                        <textarea></textarea>
                         <p class="formHint">{{ field.dict_settings.en.description }}</p>
                         {% endif %}
                     </div>

@@ -9,6 +9,9 @@ FIELDS_MAPPING = {
         u'SingleFileUpload': 'django.forms.FileField',
         u'CheckBox': 'django.forms.BooleanField',
         u'Select': 'django.forms.ChoiceField',
+        u'Email': 'django.forms.EmailField',
+        u'TextField': 'django.forms.CharField',
+        u'Date': 'django.forms.DateField',
     }
 
 
@@ -51,6 +54,8 @@ def from_jquery_to_django_forms(form, form_data):
             'sequence': field_data['sequence'],
             'type': field_data['type'],
             }
+        if field_data['type'] == 'TextField':
+            field.widget = 'django.forms.widgets.Textarea'
         field.save()
     form.save()
 
