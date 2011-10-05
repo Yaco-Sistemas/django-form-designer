@@ -20,6 +20,7 @@ var FormBuilder = {
 		tabDisabled: [],
 		formCounter: 1,
 		language: 'en',
+		imageDir: '/static/form_designer/images/',
 		settings: {
 			en: {
 				name: 'Form',

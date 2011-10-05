@@ -94,7 +94,7 @@
                         <p class="formHint">{{ field.dict_settings.en.description }}</p>
                         {% endif %}{% if field.type == 'SingleFileUpload' %}
                         <label><em>{% if field.dict_settings.required %}*{% endif %}</em><span>{{ field.dict_settings.en.label }}</span></label>
-                        <input type="file" class="fielUpload" />
+                        <input type="file" class="fielUpload" id="fields[{{ field.sequence }}].id" />
                         <p class="formHint">{{ field.dict_settings.en.description }}</p>
                         {% endif %}{% if field.type == 'CheckBox' %}
                         <label><em>{% if field.dict_settings.required %}*{% endif %}</em><span>{{ field.dict_settings.en.label }}</span></label>
@@ -132,7 +132,9 @@
 
 <script type="text/javascript">
     $(function() {
-        $('#formbuilderContainer').formbuilder();
+        $('#formbuilderContainer').formbuilder({
+            imageDir: '{{ STATIC_URL }}form_designer/images/'
+        });
         $('div.buttons').children().button();
     });
 </script>
