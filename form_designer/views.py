@@ -17,9 +17,9 @@ from form_designer.uploads import handle_uploaded_files
 from form_designer.utils import from_jquery_to_django_forms, from_django_to_jquery_forms
 
 
-def process_form(request, form_definition, extra_context={}, is_cms_plugin=False):
+def process_form(request, form_definition, extra_context=None, is_cms_plugin=False):
     context = {}
-    if extra_context:
+    if extra_context is not None:
         context.update(extra_context)
     success_message = form_definition.success_message or _('Thank you, the data was submitted successfully.')
     error_message = form_definition.error_message or _('The data could not be submitted, please try again.')
@@ -72,7 +72,7 @@ def process_form(request, form_definition, extra_context={}, is_cms_plugin=False
     if form_definition.display_logged:
         logs = form_definition.formlog_set.all().order_by('created')
         context.update({'logs': logs})
-        
+
     return context
 
 def _form_detail_view(request, form_definition):
@@ -85,8 +85,10 @@ def _form_detail_view(request, form_definition):
     return render_to_response('html/formdefinition/detail.html', result,
         context_instance=RequestContext(request))
 
-def _form_edit_view(request, form_definition, is_new):
+def _form_edit_view(request, form_definition, is_new, extra_context=None):
     context = process_form(request, form_definition)
+    if extra_context is not None:
+        context.update(extra_context)
     fields = FormDefinitionField.objects.filter(form_definition=form_definition)
     context['fields'] = from_django_to_jquery_forms(fields)
     return render_to_response('html/formdefinition/edit.html', context,
@@ -100,9 +102,9 @@ def detail_by_hash(request, public_hash):
     form_definition = get_object_or_404(FormDefinition, public_hash=public_hash)
     return _form_detail_view(request, form_definition) 
 
-def edit(request, object_name):
+def edit(request, object_name, extra_context=None):
     form_definition, created = FormDefinition.objects.get_or_create(name=object_name, require_hash=False)
-    return _form_edit_view(request, form_definition, created)
+    return _form_edit_view(request, form_definition, created, extra_context)
 
 def edit_by_hash(request, public_hash):
     form_definition, created = FormDefinition.objects.get_or_create(public_hash=public_hash)
@@ -115,5 +117,7 @@ def save(request, object_name):
         return response
     form = FormDefinition.objects.get_or_create(name=object_name)[0]
     from_jquery_to_django_forms(form, request.POST)
-    # TODO
+    redirect_to = request.REQUEST.get('redirect_to', None)
+    if redirect_to:
+        return HttpResponseRedirect(redirect_to)
     return redirect('form_designer_detail', object_name=object_name)
