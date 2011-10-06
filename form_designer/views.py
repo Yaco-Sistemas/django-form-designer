@@ -85,13 +85,16 @@ def _form_detail_view(request, form_definition):
     return render_to_response('html/formdefinition/detail.html', result,
         context_instance=RequestContext(request))
 
-def _form_edit_view(request, form_definition, is_new, extra_context=None):
+def _form_edit_view(request, form_definition, is_new, extra_context=None,
+                    template_name='html/formdefinition/edit.html',
+                    base_template='html/formdefinition/base_edit.html'):
     context = process_form(request, form_definition)
-    if extra_context is not None:
-        context.update(extra_context)
+    context['base_template'] = base_template
     fields = FormDefinitionField.objects.filter(form_definition=form_definition)
     context['fields'] = from_django_to_jquery_forms(fields)
-    return render_to_response('html/formdefinition/edit.html', context,
+    if extra_context is not None:
+        context.update(extra_context)
+    return render_to_response(template_name, context,
         context_instance=RequestContext(request))
 
 def detail(request, object_name):
@@ -102,9 +105,11 @@ def detail_by_hash(request, public_hash):
     form_definition = get_object_or_404(FormDefinition, public_hash=public_hash)
     return _form_detail_view(request, form_definition) 
 
-def edit(request, object_name, extra_context=None):
+def edit(request, object_name, extra_context=None,
+        template_name='html/formdefinition/edit.html',
+        base_template='html/formdefinition/base_edit.html'):
     form_definition, created = FormDefinition.objects.get_or_create(name=object_name, require_hash=False)
-    return _form_edit_view(request, form_definition, created, extra_context)
+    return _form_edit_view(request, form_definition, created, extra_context, template_name, base_template)
 
 def edit_by_hash(request, public_hash):
     form_definition, created = FormDefinition.objects.get_or_create(public_hash=public_hash)
