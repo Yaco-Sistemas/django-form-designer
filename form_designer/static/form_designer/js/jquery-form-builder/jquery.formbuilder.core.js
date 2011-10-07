@@ -70,25 +70,36 @@ var FormBuilder = {
 		_draggableClass: 'draggable',
 		_dropPlaceHolderClass: 'dropPlaceHolder'
   },
-  _create: function() {
-    	// called on construction
-    this._log('FormBuilder._create called. this.options.widgets = ' + this.options.widgets);
-    this._initBrowserDefaultSettings();
-    this._initBuilderPalette();
-    this._initBuilderPanel();
+    _create: function() {
+            // called on construction
+        this._log('FormBuilder._create called. this.options.widgets = ' + this.options.widgets);
+        this._initBrowserDefaultSettings();
+        this._initBuilderPalette();
+        this._initBuilderPanel();
+        this._initFieldsStyles();
     },
-  _initBrowserDefaultSettings: function() {
-	  var $html = $('html');
-	  var options = this.options;
-	  options._fontFamily = $html.css('fontFamily');
-	  options._fontSize = $html.css('fontSize');
-	  options._color = $html.css('color');
-	  options._backgroundColor = $html.css('backgroundColor');
-	  var pxIndex = options._fontSize.lastIndexOf('px');
-	  if (pxIndex > -1) {
-		  options._fontSize = options._fontSize.substring(0, pxIndex);
-	  }
-  },
+    _initBrowserDefaultSettings: function() {
+        var $html = $('html');
+        var options = this.options;
+        options._fontFamily = $html.css('fontFamily');
+        options._fontSize = $html.css('fontSize');
+        options._color = $html.css('color');
+        options._backgroundColor = $html.css('backgroundColor');
+        var pxIndex = options._fontSize.lastIndexOf('px');
+        if (pxIndex > -1) {
+            options._fontSize = options._fontSize.substring(0, pxIndex);
+        }
+    },
+    _initFieldsStyles: function() {
+        // for widgets loaded from server
+        var $ctrlHolders = $('.' + $.fb.fbWidget.prototype.options._styleClass);
+        $ctrlHolders.each(function(i) {
+            var $this = $(this),
+                widget = $this.find("input[id$='fields[" + i + "].type']").val(),
+                settings = $.parseJSON(unescape($this.find("input[id$='fields[" + i + "].settings']").val()));
+            $['fb']['fb' + widget].prototype._loadAndApplyStyles($this, settings);
+        });
+    },
   _initBuilderPalette: function() {
 		// REF: http://www.webresourcesdepot.com/smart-floating-banners/
 		$(window).scroll(
@@ -209,18 +220,18 @@ var FormBuilder = {
 			return canOpen;
 		} 
 	 },
-  _initBuilderPanel: function() {
-	  this._initFormSettings();
-	  if (!this.options.readOnly) {
-	    this._initSortableWidgets();
-      this._initDroppable();
-	  } else {
-			$('input:not(div.buttons input, #id)').attr("disabled", true);
-			$('select:not(#language)').attr("disabled", true);
-			$('textarea').attr("disabled", true);	    	
-	    }
-	  this._initWidgetsEventBinder();
-   },
+    _initBuilderPanel: function() {
+        this._initFormSettings();
+        if (!this.options.readOnly) {
+            this._initSortableWidgets();
+            this._initDroppable();
+        } else {
+            $('input:not(div.buttons input, #id)').attr("disabled", true);
+            $('select:not(#language)').attr("disabled", true);
+            $('textarea').attr("disabled", true);
+        }
+        this._initWidgetsEventBinder();
+    },
   _initDroppable: function() {
 	  var fbOptions = this.options;
 	  var $formControls = $(fbOptions._formControls);
@@ -510,34 +521,33 @@ var FormBuilder = {
 		    $this._languageChange(event, fb);
 		});
    },
- _updateSettings: function($this) {
-	 	$this._log('_updateSettings = ' + $.toJSON($this.options.settings));
-	  $('#settings').val($.toJSON($this.options.settings)).change();
-   } ,        
- _initWidgetsEventBinder: function() { // for widgets loaded from server
-	  var $ctrlHolders = $('.' + $.fb.fbWidget.prototype.options._styleClass);
-	  var size = $ctrlHolders.size();
-		if (size > 0) { 
-			var $this, widget;
-			var fieldsUpdateStatus = ['name', 'settings', 'sequence'];
-			
-			$(this.options._emptyBuilderPanel + ':visible').hide();
-			$ctrlHolders.each(function(i) {
-			    $this = $(this);
-			    widget = $this.find("input[id$='fields[" + i + "].type']").val();
-			    $this.click($['fb']['fb' + widget].prototype._createFieldSettings);				
-					for (var j = 0; j < fieldsUpdateStatus.length; j++) {
-						$this.find("input[id$='fields[" + i + "]." + fieldsUpdateStatus[j] + "']")
-						                  .change($.fb.fbWidget.prototype._updateStatus);
-					}	  
-			});
-			if (!this.options.readOnly) {
-			  $ctrlHolders.find(".closeButton").click($.fb.fbWidget.prototype._deleteWidget)
-			    .mouseover(function () { $('span', this).removeClass('ui-icon-close').addClass('ui-icon-circle-close'); }) 
-			    .mouseout(function () { $('span', this).removeClass('ui-icon-circle-close').addClass('ui-icon-close'); });
-			}
-		}
-  },
+    _updateSettings: function($this) {
+        $this._log('_updateSettings = ' + $.toJSON($this.options.settings));
+        $('#settings').val($.toJSON($this.options.settings)).change();
+    },
+    _initWidgetsEventBinder: function() { // for widgets loaded from server
+        var $ctrlHolders = $('.' + $.fb.fbWidget.prototype.options._styleClass);
+        var size = $ctrlHolders.size();
+        if (size > 0) {
+            var $this, widget;
+            var fieldsUpdateStatus = ['name', 'settings', 'sequence'];
+
+            $(this.options._emptyBuilderPanel + ':visible').hide();
+            $ctrlHolders.each(function(i) {
+                $this = $(this);
+                widget = $this.find("input[id$='fields[" + i + "].type']").val();
+                $this.click($['fb']['fb' + widget].prototype._createFieldSettings);
+                for (var j = 0; j < fieldsUpdateStatus.length; j++) {
+                    $this.find("input[id$='fields[" + i + "]." + fieldsUpdateStatus[j] + "']").change($.fb.fbWidget.prototype._updateStatus);
+                }
+            });
+            if (!this.options.readOnly) {
+            $ctrlHolders.find(".closeButton").click($.fb.fbWidget.prototype._deleteWidget)
+                .mouseover(function () { $('span', this).removeClass('ui-icon-close').addClass('ui-icon-circle-close'); })
+                .mouseout(function () { $('span', this).removeClass('ui-icon-circle-close').addClass('ui-icon-close'); });
+            }
+        }
+    },
   _initSortableWidgets: function() {
 	  var $formControls = $(this.options._formControls);
 	  $formControls.sortable({ 

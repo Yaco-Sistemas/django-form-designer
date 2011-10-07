@@ -95,15 +95,15 @@ var FbWidget = {
 		</div>');
 		$fieldProperties.find("input[id$='" + fieldId + "settings']").val($.toJSON(settings));
 		return $fieldProperties;
-    },        
-  _updateStatus: function(event) {
-	  $widget = $(event.target);
-	  $.fb.fbWidget.prototype._log($widget.attr('id') + " updated");
-	  if ($widget.parent().find('input:first').val() != 'null') {
-		  $.fb.fbWidget.prototype._log("field status updated");
-	    $widget.parent().find('input:last').val('U');
-	    }
-  },
+    },
+    _updateStatus: function(event) {
+        $widget = $(event.target);
+        $.fb.fbWidget.prototype._log($widget.attr('id') + " updated");
+        if ($widget.parent().find('input:first').val() != 'null') {
+            $.fb.fbWidget.prototype._log("field status updated");
+            $widget.parent().find('input:last').val('U');
+        }
+    },
 	_createFbWidget: function(event) {
 		$.fb.fbWidget.prototype._log('_createFbWidget executing. event.type = ' + event.type);
 		// $.fb.fbWidget.prototype._log('$(this).options._type = ' + this.options._type);
@@ -227,6 +227,39 @@ var FbWidget = {
 		  $('input:first', $fieldSettingsPanel).select();	
 		}
   	$.fb.fbWidget.prototype._log('_createFieldSettings executed.');
+    },
+    _loadAndApplyStyles: function($this, settings) {
+        // Global Styles
+        var styles = settings.styles,
+            label = $this.find('label'),
+            value = $this.find('input[type!="hidden"]'),
+            description = $this.find('.formHint'),
+            applyStyles = function (node, styles) {
+                var key, value,
+                    hex = /[0-9,a-f]{3,6}/i;
+                for (key in styles) {
+                    if (styles.hasOwnProperty(key)) {
+                        value = styles[key];
+                        if (value.indexOf('#') < 0 && hex.test(value)) {  // key.indexOf('color') >= 0
+                            value = '#' + value;
+                        }
+                        node.css(key, value);
+                    }
+                }
+            };
+
+        if (label && styles.label) {
+            applyStyles(label, styles.label);
+        }
+        if (value && styles.value) {
+            applyStyles(value, styles.value);
+        }
+        if (description && styles.description) {
+            applyStyles(description, styles.description);
+        }
+
+        // Language Styles
+        // TODO
     },
 	_getCounter: function($this) {
 		  var $ctrlHolders = $('.' + $this.options._styleClass + ':visible:not(.' + this._getFbOptions()._draggableClass + ')');
