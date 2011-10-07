@@ -29,7 +29,7 @@ def from_jquery_to_django_forms(form, form_data):
     form.title = form_settings['name']
     for key in fields.keys():
         field_data = fields[key]
-        field = FormDefinitionField.objects.get_or_create(name=field_data['name'],
+        field = FormDefinitionField.objects.get_or_create(id=field_data['id'],
                                                           form_definition=form)[0]
         field.field_class = FIELDS_MAPPING[field_data['type']]
         field_settings = json.loads(field_data['settings'])
