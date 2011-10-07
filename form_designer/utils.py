@@ -29,8 +29,11 @@ def from_jquery_to_django_forms(form, form_data):
     form.title = form_settings['name']
     for key in fields.keys():
         field_data = fields[key]
-        field = FormDefinitionField.objects.get_or_create(id=field_data['id'],
-                                                          form_definition=form)[0]
+        if not field_data['id'] or field_data['id'] == 'null':
+            field = FormDefinitionField.objects.create(form_definition=form)
+        else:
+            field = FormDefinitionField.objects.get_or_create(id=field_data['id'],
+                                                              form_definition=form)[0]
         if field_data['status'] == 'D':
             field.delete()
             continue
