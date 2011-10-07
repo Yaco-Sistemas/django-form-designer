@@ -88,8 +88,15 @@ var FbDate = $.extend({}, $.fb.fbWidget.prototype, {
 	      fb.item.find('label span').text(value);
 	      fb.settings.label = value;
 	      fb.target._updateSettings(fb.item);
-	      fb.target._updateName(fb.item, value);
          });
+        var $name = fb.target._label({
+            label: 'Name',
+            name: 'field.name'
+        }).append('<input type="text" id="field.name" />');
+        $('input', $name).val(fb.item.find("input[id$='fields[" + fb.item.attr('rel') + "].name']").val()).keyup(function(event) {
+            var value = $(this).val();
+            fb.target._updateName(fb.item, value);
+        });
 	  var $value = fb.target._label({ label: 'Value', name: 'field.value' })
 		                      .append('<input type="text" id="field.value" />');
 		$('input', $value).val(fb.settings.value)
@@ -170,7 +177,7 @@ var FbDate = $.extend({}, $.fb.fbWidget.prototype, {
 			fb.target._updateSettings(fb.item);
 		});				
 		fb.target._log('fbDate._getFieldSettingsLanguageSection executed.');
-		return [fb.target._twoColumns($label, $value), fb.target._oneColumn($description), $fontPanel];
+		return [fb.target._twoColumns($label, $value), fb.target._oneColumn($name), fb.target._oneColumn($description), $fontPanel];
 	},
 	_getFieldSettingsGeneralSection : function(event, fb) {
 		fb.target._log('fbDate._getFieldSettingsGeneralSection executing...');
