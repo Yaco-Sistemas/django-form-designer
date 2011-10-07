@@ -230,20 +230,41 @@ var FbWidget = {
     },
     _loadAndApplyStyles: function($this, settings) {
         // Global Styles
-        var styles = settings.styles,
+        var language = $.fb.fbWidget.prototype._getFbOptions().language,
+            styles = settings.styles,
             label = $this.find('label'),
             value = $this.find('input[type!="hidden"]'),
             description = $this.find('.formHint'),
             applyStyles = function (node, styles) {
                 var key, value,
-                    hex = /[0-9,a-f]{3,6}/i;
+                    hex3 = /^[0-9a-f]{3}$/i;
+                    hex6 = /^[0-9a-f]{6}$/i;
                 for (key in styles) {
                     if (styles.hasOwnProperty(key)) {
                         value = styles[key];
-                        if (value.indexOf('#') < 0 && hex.test(value)) {  // key.indexOf('color') >= 0
+                        if (value.indexOf('#') < 0 && (hex3.test(value) || hex6.test(value))) {  // key.indexOf('color') >= 0
+                            // This plugin don't store hexcolor with the #
+                            // and that's why this hack is needed
                             value = '#' + value;
                         }
-                        node.css(key, value);
+                        if (key == 'fontSize' && value.indexOf('pt') < 0) {
+                            // This plugin don't store the font size with the
+                            // needed 'pt', therefore this hack
+                            value = value + 'pt'
+                        }
+                        if (key == 'fontStyles') {
+                            if (value[0]) {
+                                node.css('font-weight', 'bold');
+                            }
+                            if (value[1]) {
+                                node.css('font-style', 'italic');
+                            }
+                            if (value[2]) {
+                                node.find('label span').css('text-decoration', 'underline');
+                            }
+                        } else {
+                            node.css(key, value);
+                        }
                     }
                 }
             };
@@ -259,7 +280,12 @@ var FbWidget = {
         }
 
         // Language Styles
-        // TODO
+        if (settings[language]) {
+            styles = settings[language].styles;
+            if (styles) {
+                applyStyles($this, styles);
+            }
+        }
     },
 	_getCounter: function($this) {
 		  var $ctrlHolders = $('.' + $this.options._styleClass + ':visible:not(.' + this._getFbOptions()._draggableClass + ')');
