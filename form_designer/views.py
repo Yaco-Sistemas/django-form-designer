@@ -87,7 +87,7 @@ def _form_detail_view(request, form_definition):
 
 def _form_edit_view(request, form_definition, is_new, extra_context=None,
                     template_name='html/formdefinition/edit.html',
-                    base_template='html/formdefinition/base_edit.html'):
+                    base_template='html/formdefinition/base.html'):
     context = process_form(request, form_definition)
     context['base_template'] = base_template
     fields = FormDefinitionField.objects.filter(form_definition=form_definition)
@@ -107,7 +107,7 @@ def detail_by_hash(request, public_hash):
 
 def edit(request, object_name, extra_context=None,
         template_name='html/formdefinition/edit.html',
-        base_template='html/formdefinition/base_edit.html'):
+        base_template='html/formdefinition/base.html'):
     form_definition, created = FormDefinition.objects.get_or_create(name=object_name, require_hash=False)
     return _form_edit_view(request, form_definition, created, extra_context, template_name, base_template)
 
