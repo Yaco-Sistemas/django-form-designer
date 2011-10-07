@@ -56,16 +56,16 @@ var FormBuilder = {
 		_standardFieldsPanel: '#standardFields',
 		_fancyFieldsPanel: '#fancyFields',
 		_fieldSettingsPanel: '#fieldSettings',
-    _fieldSettingsLanguageSection: '#fieldSettings fieldset.language:first',
-    _fieldSettingsGeneralSection: '#fieldSettings div.general:first',
-    _formSettingsLanguageSection: '#formSettings fieldset.language:first',
-    _formSettingsGeneralSection: '#formSettings div.general:first',
-    _languagesSupportIdGeneration: ['en'],
-    _dragBoxCss: {
-		  opacity: 0.6,
-		  zIndex: 8888, 
-		  border: "5px solid #cccccc"
-	  },
+        _fieldSettingsLanguageSection: '#fieldSettings fieldset.language:first',
+        _fieldSettingsGeneralSection: '#fieldSettings div.general:first',
+        _formSettingsLanguageSection: '#formSettings fieldset.language:first',
+        _formSettingsGeneralSection: '#formSettings div.general:first',
+        _languagesSupportIdGeneration: ['en'],
+        _dragBoxCss: {
+            opacity: 0.6,
+            zIndex: 8888,
+            border: "5px solid #cccccc"
+        },
 		_formControls: '#builderPanel fieldset',
 		_draggableClass: 'draggable',
 		_dropPlaceHolderClass: 'dropPlaceHolder'

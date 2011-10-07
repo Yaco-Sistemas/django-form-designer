@@ -168,65 +168,65 @@ var FbWidget = {
 			 }, 1500,'easeInOutExpo');			 
 		 }
     },
-  _createFieldSettings: function(event, $widget) { 
-	  $.fb.fbWidget.prototype._log('_createFieldSettings executing.');
-	  if (!$widget) { // calling from click event
-		  $widget = $(this);
-	    }
-		var selectedClass = $.fb.fbWidget.prototype.options._selectedClass;
-		$widget = $widget.attr('class').indexOf($.fb.fbWidget.prototype.options._styleClass) > -1 ? $widget : $widget.parent();
-		$widget.parent().find('.' + selectedClass).removeClass(selectedClass);
-		$widget.addClass(selectedClass);
-		var type = $widget.find("input[id$='fields[" + $widget.attr('rel') + "].type']").val();
-		$.fb.fbWidget.prototype._log('type = ' + type);
-		var $this = $('#' + type).data('fb' + type);
-		var fbOptions = $this._getFbOptions();
-		$this._log('$widget.text() = ' + $widget.text() + ", fbOptions.readOnly = " + fbOptions.readOnly);
-		
-		if (!$widget.data('fbWidget')) { // widgets loaded from server
-			var $settings = $widget.find("input[id$='fields[" + $widget.attr('rel') + "].settings']");
-			$this._log('_createFieldSettings. unescaped settings = ' + unescape($settings.val()));
-			// settings is JavaScript encoded when return from server-side
-			$widget.data('fbWidget', $.parseJSON(unescape($settings.val())));
-		}
-		var settings = $widget.data('fbWidget'); 
-		var $languageSection = $(fbOptions._fieldSettingsLanguageSection);
-		var $language = $('#language');
-		$('legend', $languageSection).text('Language: ' + $language.find('option:selected').text());		
-		var fbLanguageSection = {target: $this, item: $widget, settings: settings[$language.val()]};
-		var fieldSettings = $this._getFieldSettingsLanguageSection(event, fbLanguageSection);
-		// remote all child nodes except legend
-		$languageSection.children(':not(legend)').remove();  
-		for (var i=0; i<fieldSettings.length; i++) {
-			$languageSection.append(fieldSettings[i]);
-		} 
-		var fbGeneralSection = {target: $this, item: $widget, settings: settings};
-		fieldSettings = $this._getFieldSettingsGeneralSection(event, fbGeneralSection);
-		$this._log('fieldSettings.length = ' + fieldSettings.length);
-		var $generalSection = $(fbOptions._fieldSettingsGeneralSection); 
-		// remote all child nodes
-		$generalSection.children().remove();  	
-		for (var i=0; i<fieldSettings.length; i++) {
-			$this._log(fieldSettings[i].html());
-		  $generalSection.append(fieldSettings[i]);
-		}
-		
-		if (fbOptions.readOnly) {
-		  var $fieldSettingsPanel = $(fbOptions._fieldSettingsPanel);
-		  $('input', $fieldSettingsPanel).attr("disabled", true);
-		  $('select', $fieldSettingsPanel).attr("disabled", true);
-		  $('textarea', $fieldSettingsPanel).attr("disabled", true);
-		}
-		
-		$.fb.fbWidget.prototype._log('_createFieldSettings. event.type = ' + event.type);
-		if (event.type == 'click') {
-		  // activate field settings tab
-		  $(fbOptions._paletteTabs).tabs('select', 1);
-		
-		  // highlight and select the 1st input component
-		  $('input:first', $fieldSettingsPanel).select();	
-		}
-  	$.fb.fbWidget.prototype._log('_createFieldSettings executed.');
+    _createFieldSettings: function(event, $widget) {
+        $.fb.fbWidget.prototype._log('_createFieldSettings executing.');
+        if (!$widget) { // calling from click event
+            $widget = $(this);
+        }
+        var selectedClass = $.fb.fbWidget.prototype.options._selectedClass;
+        $widget = $widget.attr('class').indexOf($.fb.fbWidget.prototype.options._styleClass) > -1 ? $widget : $widget.parent();
+        $widget.parent().find('.' + selectedClass).removeClass(selectedClass);
+        $widget.addClass(selectedClass);
+        var type = $widget.find("input[id$='fields[" + $widget.attr('rel') + "].type']").val();
+        $.fb.fbWidget.prototype._log('type = ' + type);
+        var $this = $('#' + type).data('fb' + type);
+        var fbOptions = $this._getFbOptions();
+        $this._log('$widget.text() = ' + $widget.text() + ", fbOptions.readOnly = " + fbOptions.readOnly);
+
+        if (!$widget.data('fbWidget')) { // widgets loaded from server
+            var $settings = $widget.find("input[id$='fields[" + $widget.attr('rel') + "].settings']");
+            $this._log('_createFieldSettings. unescaped settings = ' + unescape($settings.val()));
+            // settings is JavaScript encoded when return from server-side
+            $widget.data('fbWidget', $.parseJSON(unescape($settings.val())));
+        }
+        var settings = $widget.data('fbWidget');
+        var $languageSection = $(fbOptions._fieldSettingsLanguageSection);
+        var $language = $('#language');
+        $('legend', $languageSection).text('Language: ' + $language.find('option:selected').text());
+        var fbLanguageSection = {target: $this, item: $widget, settings: settings[$language.val()]};
+        var fieldSettings = $this._getFieldSettingsLanguageSection(event, fbLanguageSection);
+        // remote all child nodes except legend
+        $languageSection.children(':not(legend)').remove();
+        for (var i=0; i<fieldSettings.length; i++) {
+            $languageSection.append(fieldSettings[i]);
+        }
+        var fbGeneralSection = {target: $this, item: $widget, settings: settings};
+        fieldSettings = $this._getFieldSettingsGeneralSection(event, fbGeneralSection);
+        $this._log('fieldSettings.length = ' + fieldSettings.length);
+        var $generalSection = $(fbOptions._fieldSettingsGeneralSection);
+        // remote all child nodes
+        $generalSection.children().remove();
+        for (var i=0; i<fieldSettings.length; i++) {
+            $this._log(fieldSettings[i].html());
+            $generalSection.append(fieldSettings[i]);
+        }
+
+        if (fbOptions.readOnly) {
+            var $fieldSettingsPanel = $(fbOptions._fieldSettingsPanel);
+            $('input', $fieldSettingsPanel).attr("disabled", true);
+            $('select', $fieldSettingsPanel).attr("disabled", true);
+            $('textarea', $fieldSettingsPanel).attr("disabled", true);
+        }
+
+        $.fb.fbWidget.prototype._log('_createFieldSettings. event.type = ' + event.type);
+        if (event.type == 'click') {
+            // activate field settings tab
+            $(fbOptions._paletteTabs).tabs('select', 1);
+
+            // highlight and select the 1st input component
+            $('input:first', $fieldSettingsPanel).select();
+        }
+        $.fb.fbWidget.prototype._log('_createFieldSettings executed.');
     },
     _loadAndApplyStyles: function($this, settings) {
         // Global Styles
@@ -316,21 +316,21 @@ var FbWidget = {
   	var $settings = $widget.find("input[id$='fields[" + $widget.attr('rel') + "].settings']");
   	$settings.val($.toJSON(settings)).change();
    	} ,          
-  _updateName: function($widget, value) {
-	  var fbOptions = this._getFbOptions();
-	  // disabledNameChange option for edit view.
-	  var disabledNameChange = fbOptions.disabledNameChange;
-	  var index = $widget.attr('rel');
-	  if (disabledNameChange) { 
-		  // disabledNameChange apply for fields loaded from server-side only
-		  this._log('_updateName. id == null: ' + ($widget.find("input[id$='fields[" + index + "].id']").val() != 'null'));
-		  disabledNameChange = $widget.find("input[id$='fields[" + index + "].id']").val() != 'null';
-	  }
-		if (!disabledNameChange && 
-				$.inArray($('#language').val(), fbOptions._languagesSupportIdGeneration) > -1) {
-			var name = this._propertyName(value);
-			$widget.find("input[id$='fields[" + index + "].name']").val(name).change();
-		}
+    _updateName: function($widget, value) {
+        var fbOptions = this._getFbOptions();
+        // disabledNameChange option for edit view.
+        var disabledNameChange = fbOptions.disabledNameChange;
+        var index = $widget.attr('rel');
+        if (disabledNameChange) {
+            // disabledNameChange apply for fields loaded from server-side only
+            this._log('_updateName. id == null: ' + ($widget.find("input[id$='fields[" + index + "].id']").val() != 'null'));
+            disabledNameChange = $widget.find("input[id$='fields[" + index + "].id']").val() != 'null';
+        }
+        if (!disabledNameChange &&
+                $.inArray($('#language').val(), fbOptions._languagesSupportIdGeneration) > -1) {
+            var name = this._propertyName(value);
+            $widget.find("input[id$='fields[" + index + "].name']").val(name).change();
+        }
     } ,
   _threeColumns: function($e1, $e2, $e3) {
   	  return $('<div class="threeCols"></div>')
