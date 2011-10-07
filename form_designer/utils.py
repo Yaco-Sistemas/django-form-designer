@@ -38,6 +38,7 @@ def from_jquery_to_django_forms(form, form_data):
             field.delete()
             continue
         field.name = field_data['name']
+        field.position = field_data['sequence']
         field.field_class = FIELDS_MAPPING[field_data['type']]
         field_settings = json.loads(field_data['settings'])
         if 'label' in field_settings['en']:
@@ -58,7 +59,6 @@ def from_jquery_to_django_forms(form, form_data):
             field.choice_values = "\n".join(choice_values)
         field.form_builder_settings = {
             'settings': field_settings,
-            'sequence': field_data['sequence'],
             'type': field_data['type'],
             }
         if field_data['type'] == 'TextField':
@@ -76,7 +76,7 @@ def from_django_to_jquery_forms(fields):
                 'type': field.form_builder_settings['type'],
                 'dict_settings': field.form_builder_settings['settings'],
                 'settings': json.dumps(field.form_builder_settings['settings']),
-                'sequence': field.form_builder_settings['sequence']
+                'sequence': field.position,
             }
         result.append(field_data)
     return result
