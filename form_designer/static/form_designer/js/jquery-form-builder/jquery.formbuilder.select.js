@@ -31,6 +31,7 @@ var FbSelect = $.extend({}, $.fb.fbWidget.prototype, {
                 }
             },
             required: false,
+            readonly: false,
             options: [],
             styles: {
                 label: {
@@ -160,9 +161,11 @@ var FbSelect = $.extend({}, $.fb.fbWidget.prototype, {
     _getFieldSettingsGeneralSection : function(event, fb) {
         fb.target._log('fbSelect._getFieldSettingsGeneralSection executing...');
         var $required = $('<div><input type="checkbox" id="field.required" />&nbsp;Required</div>');
+        var $readonly = $('<div><input type="checkbox" id="field.readonly" />&nbsp;Read-only</div>');
         var $valuePanel = fb.target._fieldset({
             text: 'Value'
-        }).append(fb.target._oneColumn($required));
+        }).append(fb.target._oneColumn($required))
+          .append(fb.target._oneColumn($readonly));
         $('input', $required).attr('checked', fb.settings.required).change(function(event) {
             if ($(this).attr('checked')) {
                 fb.item.find('em').text('*');
@@ -170,6 +173,15 @@ var FbSelect = $.extend({}, $.fb.fbWidget.prototype, {
             } else {
                 fb.item.find('em').text('');
                 fb.settings.required = false;
+            }
+            fb.target._updateSettings(fb.item);
+        });
+
+        $('input', $readonly).attr('checked', fb.settings.readonly).change(function(event) {
+            if ($(this).attr('checked')) {
+                fb.settings.readonly = true;
+            } else {
+                fb.settings.readonly = false;
             }
             fb.target._updateSettings(fb.item);
         });

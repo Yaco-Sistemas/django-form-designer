@@ -296,10 +296,12 @@ class FormDefinitionField(models.Model):
 
         uniform_class = '' #'textInput'
 
+        attrs = {'class': uniform_class}
+        if self.form_builder_settings['settings'].get('readonly', False):
+            attrs.update({'readonly': 'readonly'})
         args.update({
-            'widget': widget(attrs={'class': uniform_class})
+            'widget': widget(attrs=attrs)
         })
-
         return args
 
     class Meta:

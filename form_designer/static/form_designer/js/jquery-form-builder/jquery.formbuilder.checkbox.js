@@ -31,6 +31,7 @@ var FbCheckBox = $.extend({}, $.fb.fbWidget.prototype, {
                 }
             },
             required: false,
+            readonly: false,
             styles: {
                 label: {
                     color: 'default',
@@ -159,11 +160,21 @@ var FbCheckBox = $.extend({}, $.fb.fbWidget.prototype, {
     _getFieldSettingsGeneralSection : function(event, fb) {
         fb.target._log('fbCheckBox._getFieldSettingsGeneralSection executing...');
         var $required = $('<div><input type="checkbox" id="field.required" />&nbsp;Required</div>');
+        var $readonly = $('<div><input type="checkbox" id="field.readonly" />&nbsp;Read-only</div>');
         var $valuePanel = fb.target._fieldset({
             text: 'Value'
-        }).append(fb.target._oneColumn($required));
+        }).append(fb.target._oneColumn($required)).append(fb.target._oneColumn($readonly));
         $('.col1', $valuePanel).css('width', '32%').removeClass('labelOnTop');
         $('.col2', $valuePanel).css('marginLeft', '34%').removeClass('labelOnTop');
+
+        $('input', $readonly).attr('checked', fb.settings.readonly).change(function(event) {
+            if ($(this).attr('checked')) {
+                fb.settings.readonly = true;
+            } else {
+                fb.settings.readonly = false;
+            }
+            fb.target._updateSettings(fb.item);
+        });
 
         $('input', $required).attr('checked', fb.settings.required).change(function(event) {
             if ($(this).attr('checked')) {

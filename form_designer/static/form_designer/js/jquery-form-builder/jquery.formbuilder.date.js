@@ -43,6 +43,7 @@ var FbDate = $.extend({}, $.fb.fbWidget.prototype, {
 			},
 			_persistable: true,
 			required: true,
+			readonly: false,
 			restriction: 'no',
 			styles : {
 				label: {
@@ -182,6 +183,7 @@ var FbDate = $.extend({}, $.fb.fbWidget.prototype, {
 	_getFieldSettingsGeneralSection : function(event, fb) {
 		fb.target._log('fbDate._getFieldSettingsGeneralSection executing...');
 		var $required = $('<div><input type="checkbox" id="field.required" />&nbsp;Required</div>');
+		var $readonly = $('<div><input type="checkbox" id="field.readonly" />&nbsp;Read-only</div>');
 		var $restriction = $('<div><select id="field.restriction" style="width: 99%"> \
 				<option value="no">any character</option> \
 				<option value="alphanumeric">alphanumeric only</option> \
@@ -189,7 +191,8 @@ var FbDate = $.extend({}, $.fb.fbWidget.prototype, {
 				<option value="lettersonly">letters only</option> \
 			</select></div>');
 		var $valuePanel = fb.target._fieldset({ text: 'Value'})
-		                  .append(fb.target._twoColumns($required, $restriction));
+		                  .append(fb.target._twoColumns($required, $restriction))
+                                  .append(fb.target._oneColumn($readonly));
 		$('.col1', $valuePanel).css('width', '32%').removeClass('labelOnTop');
 		$('.col2', $valuePanel).css('marginLeft', '34%').removeClass('labelOnTop');
 		
@@ -201,6 +204,16 @@ var FbDate = $.extend({}, $.fb.fbWidget.prototype, {
 			} else {
 				fb.item.find('em').text('');		
 				fb.settings.required = false;
+			}
+			fb.target._updateSettings(fb.item);
+		});		
+		
+		$('input', $readonly).attr('checked', fb.settings.readonly)
+		 .change(function(event) {
+			if ($(this).attr('checked')) {
+				fb.settings.readonly = true;
+			} else {
+				fb.settings.readonly = false;
 			}
 			fb.target._updateSettings(fb.item);
 		});		
