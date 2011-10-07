@@ -37,6 +37,7 @@ def from_jquery_to_django_forms(form, form_data):
         if field_data['status'] == 'D':
             field.delete()
             continue
+        field.name = field_data['name']
         field.field_class = FIELDS_MAPPING[field_data['type']]
         field_settings = json.loads(field_data['settings'])
         if 'label' in field_settings['en']:
