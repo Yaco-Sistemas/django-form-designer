@@ -10,7 +10,7 @@
 * Date: 30-Sep-2011
 */
 
-var FbSelect = $.extend({}, $.fb.fbWidget.prototype, {
+var FbRadio = $.extend({}, $.fb.fbWidget.prototype, {
     options: { // default options. values are stored in widget's prototype
         name: 'Radio',
         belongsTo: $.fb.formbuilder.prototype.options._standardFieldsPanel,
@@ -258,4 +258,4 @@ var FbSelect = $.extend({}, $.fb.fbWidget.prototype, {
     }
 });
 
-$.widget('fb.fbSelect', FbSelect);
+$.widget('fb.fbRadio', FbRadio);
