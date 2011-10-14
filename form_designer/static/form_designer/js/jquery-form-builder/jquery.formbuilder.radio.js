@@ -174,7 +174,7 @@ var FbRadio = $.extend({}, $.fb.fbWidget.prototype, {
             fb.target._updateSettings(fb.item);
         });
 
-        var $addRadio = $('<div><label for="addRadioGroup">Group name</label>&nbsp;<input id="addRadioGroup" type="text" />\
+        var $addRadio = $('<div><label for="addRadioName">Name</label>&nbsp;<input id="addRadioName" type="text" />\
             <label for="addRadioValue">Value</label>&nbsp;<input id="addRadioValue" type="text" />\
             <span id="addRadioButton">Add radio</span>\
             <div style="clear: both;"></div>\
@@ -184,15 +184,15 @@ var FbRadio = $.extend({}, $.fb.fbWidget.prototype, {
         }).append(fb.target._oneColumn($addRadio));
         $('#addRadioButton', $addRadio).css('cursor', 'pointer').css('float', 'right').css('text-decoration', 'underline').css('margin-top', '5px').click(function(event) {
             var fieldset = $(this.parentNode.parentNode),
-                radioGroup = fieldset.find('#addRadioGroup'),
+                radioName = fieldset.find('#addRadioName'),
                 radioValue = fieldset.find('#addRadioValue'),
                 radio, radioContainer;
-            if (radioGroup[0].value !== '') {
+            if (radioName[0].value !== '') {
                 radioContainer = fb.item.find('.radioContainer')[0];
-                radio = '<input type="radio" name="' + radioGroup[0].value + '" value="' + radioValue[0].value + '"/>';
-                fb.settings.radios.push([radioGroup[0].value, radioValue[0].value]);
+                radio = '<input type="radio" value="' + radioValue[0].value + '"/> ' + radioName[0].value + '<br/>';
+                fb.settings.radios.push([radioName[0].value, radioValue[0].value]);
                 radioValue[0].value = '';
-                radioGroup[0].value = '';
+                radioName[0].value = '';
                 radioContainer.innerHTML += radio;
                 fb.target._updateSettings(fb.item);
             }

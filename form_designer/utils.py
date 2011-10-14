@@ -12,6 +12,7 @@ FIELDS_MAPPING = {
         u'Email': 'django.forms.EmailField',
         u'TextField': 'django.forms.CharField',
         u'Date': 'django.forms.DateField',
+        u'Radio': 'django.forms.ChoiceField',
     }
 
 
@@ -55,6 +56,15 @@ def from_jquery_to_django_forms(form, form_data):
             for opt in field_settings['options']:
                 choice_labels.append(opt[0])
                 choice_values.append(opt[1])
+            field.choice_labels = "\n".join(choice_labels)
+            field.choice_values = "\n".join(choice_values)
+        if 'radios' in field_settings:
+            field.widget = 'django.forms.widgets.RadioSelect'
+            choice_labels = []
+            choice_values = []
+            for rad in field_settings['radios']:
+                choice_labels.append(rad[0])
+                choice_values.append(rad[1])
             field.choice_labels = "\n".join(choice_labels)
             field.choice_values = "\n".join(choice_values)
         field.form_builder_settings = {

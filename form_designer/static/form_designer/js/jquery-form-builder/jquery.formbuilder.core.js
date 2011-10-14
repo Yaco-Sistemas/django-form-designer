@@ -14,7 +14,7 @@
 
 var FormBuilder = {
   options: { // default options. values are stored in prototype
-		fields: 'PlainText, SingleLineText, SingleFileUpload, CheckBox, Select, Email, TextField, Date',
+		fields: 'PlainText, SingleLineText, SingleFileUpload, CheckBox, Select, Email, TextField, Date, Radio',
 		tabSelected: 0,
 		readOnly: false,
 		tabDisabled: [],

@@ -131,7 +131,7 @@
                         <label><em>{% if field.dict_settings.required %}*{% endif %}</em><span>{{ field.dict_settings.en.label }}</span></label>
                         <div class="radioContainer">
                             {% for rad in field.dict_settings.radios %}
-                            <input type="radio" name="{{ rad.0 }}" value="{{ rad.1 }}"/>
+                            <input type="radio" value="{{ rad.1 }}"/> {{ rad.0 }}<br/>
                             {% endfor %}
                         </div>
                         <p class="formHint">{{ field.dict_settings.en.description }}</p>
