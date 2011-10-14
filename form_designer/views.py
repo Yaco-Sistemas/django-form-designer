@@ -17,10 +17,8 @@ from form_designer.uploads import handle_uploaded_files
 from form_designer.utils import from_jquery_to_django_forms, from_django_to_jquery_forms
 
 
-def process_form(request, form_definition, extra_context=None, is_cms_plugin=False):
-    context = {}
-    if extra_context is not None:
-        context.update(extra_context)
+def process_form(request, form_definition, extra_context={}, is_cms_plugin=False):
+    context = extra_context
     success_message = form_definition.success_message or _('Thank you, the data was submitted successfully.')
     error_message = form_definition.error_message or _('The data could not be submitted, please try again.')
     form_error = False
