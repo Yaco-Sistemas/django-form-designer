@@ -21,17 +21,46 @@ var FbWidget = {
 	_create: function() {
 	  this._log('FbWidget._create called.');
     },
-  _init: function() {
-    this._log('FbWidget._init called.');
-    this.element.click(this._createFbWidget);
-    },        
+    _init: function() {
+        this._log('FbWidget._init called.');
+        this._initTranslations();
+        this.element.click(this._createFbWidget);
+    },
+    _initTranslations: function() {
+        var locale = FbLocales();
+        locale.addTranslation('es', {
+            'delete this widget': "borrar este widget",
+            'Horizontal Align': "Alineamiento Horizontal",
+            'Left': "Izquierda",
+            'Center': "Centrado",
+            'Right': "Derecha",
+            'Vertical Align': "Alineamiento vertical",
+            'Top': "Arriba",
+            'Middle': "Centrado",
+            'Bottom': "Abajo",
+            'Name': "Nombre",
+            'Bold': "Negrita",
+            'Italic': "Cursiva",
+            'Underline': "Subrayado",
+            'Colors': "Colores",
+            'Text': "Texto",
+            'Background': "Fondo",
+            'Label': "Etiqueta",
+            'Value': "Valor",
+            'Description': "Descripción",
+            'Size': "Tamaño",
+            'Fonts': "Fuentes",
+            'Font': "Fuente"
+        });
+        $.fb.fbWidget.prototype.addTranslation = locale.addTranslation;
+        $.fb.fbWidget.prototype.translate = locale.translate;
+    },
 	destroy: function() {
 	  this._log('FbWidget.destroy called.');
 	  this.element.button('destroy');
 
 	  // call the base destroy function.
 		$.Widget.prototype.destroy.call(this);
-
     },
   _getFbOptions: function() {
 	  return $($.fb.formbuilder.prototype.options._id).formbuilder('option');  
@@ -43,7 +72,7 @@ var FbWidget = {
 	  var fbOptions = $.fb.formbuilder.prototype.options;
 	  var index = $('#builderForm div.ctrlHolder').size();
 	  
-	  $('<a class="ui-corner-all closeButton" href="#"><span class="ui-icon ui-icon-close">delete this widget</span></a>')
+	  $('<a class="ui-corner-all closeButton" href="#"><span class="ui-icon ui-icon-close">' + $.fb.fbWidget.prototype.translate('delete this widget') + '</span></a>')
 	  .prependTo(widget).click($.fb.fbWidget.prototype._deleteWidget)
 	  .mouseover(function () { $('span', this).removeClass('ui-icon-close').addClass('ui-icon-circle-close'); }) 
 	  .mouseout(function () { $('span', this).removeClass('ui-icon-circle-close').addClass('ui-icon-close'); });
@@ -376,31 +405,31 @@ var FbWidget = {
  	},
  	_horizontalAlignment: function(options) {
  		var o = $.extend({}, options);
- 		o.label = o.label ? o.label : 'Horizontal Align'; 
+ 		o.label = o.label ? o.label : $.fb.fbWidget.prototype.translate('Horizontal Align');
  		var $horizontalAlignment = this._label(o)
 		.append('<select> \
-			<option value="leftAlign">left</option> \
-			<option value="centerAlign">center</option> \
-			<option value="rightAlign">right</option> \
+			<option value="leftAlign">' + $.fb.fbWidget.prototype.translate('Left') + '</option> \
+			<option value="centerAlign">' + $.fb.fbWidget.prototype.translate('Center') + '</option> \
+			<option value="rightAlign">' + $.fb.fbWidget.prototype.translate('Right') + '</option> \
 		</select>');
 		$('select', $horizontalAlignment).val(o.value).attr('id', o.name);	
 		return $horizontalAlignment;
  	},
  	_verticalAlignment: function(options) {
  		var o = $.extend({}, options);
- 		o.label = o.label ? o.label : 'Vertical Align'; 
+ 		o.label = o.label ? o.label : $.fb.fbWidget.prototype.translate('Vertical Align'); 
  		var $verticalAlignment = this._label(o)
 		 .append('<select> \
-				<option value="topAlign">top</option> \
-				<option value="middleAlign">middle</option> \
-				<option value="bottomAlign">bottom</option> \
+				<option value="topAlign">' + $.fb.fbWidget.prototype.translate('top') + '</option> \
+				<option value="middleAlign">' + $.fb.fbWidget.prototype.translate('middle') + '</option> \
+				<option value="bottomAlign">' + $.fb.fbWidget.prototype.translate('bottom') + '</option> \
 			</select></div>');
 		$('select', $verticalAlignment).val(o.value).attr('id', o.name);	
 		return $verticalAlignment;			
  	},
  	_name: function($widget) {
  		var index = $widget.attr('rel');
- 		var $name = $('<label for="field.name">Name (?)</label><br/> \
+ 		var $name = $('<label for="field.name">' + $.fb.fbWidget.prototype.translate('Name') + ' (?)</label><br/> \
  				  <input type="text" id="field.name" />');
 		$("input[id$='field.name']", $name)
 		.val($widget.find("input[id$='fields[" + index + "].name']").val())
@@ -445,7 +474,7 @@ var FbWidget = {
  		var o = $.extend({}, options);
  		this._log('fontPicker(' + $.toJSON(o) + ')');
  		o.value = o.value != 'default' ? o.value : this._getFbOptions()._fontFamily;
- 		if (!o.label) o.label = 'Font';
+ 		if (!o.label) o.label = $.fb.fbWidget.prototype.translate('Font');
 		var $fontPicker = this._label(o).append('<div class="fontPicker" rel="' + o.name + '"></div>'); 		
 
 		$('.fontPicker', $fontPicker).fontPicker({ 
@@ -488,9 +517,9 @@ var FbWidget = {
 	  var names = options.names;
 	  var checked = options.checked;
 		var $fontStyles = $('<div> \
-		  <input type="checkbox" id="' + names[0] + '" />&nbsp;Bold<br /> \
-	    <input type="checkbox" id="' + names[1] + '" />&nbsp;Italic<br /> \
-	    <input type="checkbox" id="' + names[2] + '" />&nbsp;Underline \
+		  <input type="checkbox" id="' + names[0] + '" />&nbsp;' + $.fb.fbWidget.prototype.translate('Bold') + '<br /> \
+	    <input type="checkbox" id="' + names[1] + '" />&nbsp;' + $.fb.fbWidget.prototype.translate('Italic') + '<br /> \
+	    <input type="checkbox" id="' + names[2] + '" />&nbsp;' + $.fb.fbWidget.prototype.translate('Underline') + ' \
 	  </div>');
 	  if (checked) {
 	    for (var i = 0; i < checked.length; i++) {
@@ -522,13 +551,13 @@ var FbWidget = {
 	  var names = [idPrefix + 'bold', idPrefix + 'italic', idPrefix + 'underline'];
 	  var fontPanel = this._twoRowsOneRow(
 			  this._fontPicker({ name: idPrefix + 'fontFamily', value: options.fontFamily }),
-			  this._fontSize({ label: 'Size', name: idPrefix + 'fontSize', value: options.fontSize }),
+			  this._fontSize({ label: $.fb.fbWidget.prototype.translate('Size'), name: idPrefix + 'fontSize', value: options.fontSize }),
 			  this._fontStyles({ names: names, checked: options.fontStyles }).css('paddingLeft', '2em')
 	    );
 	  if (options.nofieldset)
 		  return fontPanel;
 	  else
-	    return this._fieldset({ text: 'Fonts' }).append(fontPanel);
+	    return this._fieldset({ text: $.fb.fbWidget.prototype.translate('Fonts') }).append(fontPanel);
   },
   _colorPanel: function(options) {
 	  //textColorValue, backgroundColorValue, idPrefix
@@ -540,9 +569,9 @@ var FbWidget = {
 	  if (o.backgroundColor == 'default') {
 		  o.backgroundColor = this._getFbOptions().settings.styles.backgroundColor;
 	    } 	 
-	  var $colorPanel = this._fieldset({ text: 'Colors' }).append(
-			  this._twoColumns(this._colorPicker({ label: 'Text', name: o.idPrefix + 'color', value: o.color }),
-			  this._colorPicker({ label: 'Background', name: o.idPrefix + 'backgroundColor', value: o.backgroundColor })));
+	  var $colorPanel = this._fieldset({ text: $.fb.fbWidget.prototype.translate('Colors') }).append(
+			  this._twoColumns(this._colorPicker({ label: $.fb.fbWidget.prototype.translate('Text'), name: o.idPrefix + 'color', value: o.color }),
+			  this._colorPicker({ label: $.fb.fbWidget.prototype.translate('Background'), name: o.idPrefix + 'backgroundColor', value: o.backgroundColor })));
 	  $colorPanel.find('.2cols .col2').addClass('noPaddingBottom');
 	  $colorPanel.find('input:first').addClass('floatClearLeft');
 	  return $colorPanel;
@@ -567,15 +596,15 @@ var FbWidget = {
                 o.description.backgroundColor = fbStyles.backgroundColor;
                 }
         }
-        var $colorPanel = this._fieldset({ text: 'Colors' }).append(this._threeColumns($('<div></div>'), $('<div>Text</div>'), $('<div>Background</div>')).css('paddingBottom', '2px'))
+        var $colorPanel = this._fieldset({ text: $.fb.fbWidget.prototype.translate('Colors') }).append(this._threeColumns($('<div></div>'), $('<div>' + $.fb.fbWidget.prototype.translate('Text') + '</div>'), $('<div>' + $.fb.fbWidget.prototype.translate('Background') + '</div>')).css('paddingBottom', '2px'))
         if (o.label) {
-            $colorPanel = $colorPanel.append(this._threeColumns($('<div>Label</div>'), this._colorPicker({ name: 'field.label.color', value: o.label.color }), this._colorPicker({ name: 'field.label.backgroundColor', value: o.label.backgroundColor })))
+            $colorPanel = $colorPanel.append(this._threeColumns($('<div>' + $.fb.fbWidget.prototype.translate('Label') + '</div>'), this._colorPicker({ name: 'field.label.color', value: o.label.color }), this._colorPicker({ name: 'field.label.backgroundColor', value: o.label.backgroundColor })))
         }
         if (o.value) {
-            $colorPanel = $colorPanel.append(this._threeColumns($('<div>Value</div>'), this._colorPicker({ name: 'field.value.color', value: o.value.color }), this._colorPicker({ name: 'field.value.backgroundColor', value: o.value.backgroundColor })))
+            $colorPanel = $colorPanel.append(this._threeColumns($('<div>' + $.fb.fbWidget.prototype.translate('Value') + '</div>'), this._colorPicker({ name: 'field.value.color', value: o.value.color }), this._colorPicker({ name: 'field.value.backgroundColor', value: o.value.backgroundColor })))
         }
         if (o.description) {
-            $colorPanel = $colorPanel.append(this._threeColumns($('<div>Description</div>'), this._colorPicker({ name: 'field.description.color', value: o.description.color }), this._colorPicker({ name: 'field.description.backgroundColor', value: o.description.backgroundColor })));
+            $colorPanel = $colorPanel.append(this._threeColumns($('<div>' + $.fb.fbWidget.prototype.translate('Description') + '</div>'), this._colorPicker({ name: 'field.description.color', value: o.description.color }), this._colorPicker({ name: 'field.description.backgroundColor', value: o.description.backgroundColor })));
         }
         $colorPanel.css('paddingTop', '0.5em');
         $('input', $colorPanel).addClass('floatClearLeft');

@@ -41,14 +41,28 @@ var FormBuilder = {
 					fontSize: 'default',
 					fontStyles: [1, 0, 0] // bold, italic, underline					
 				}			
-			},			
+			},
+            es: {
+                name: 'Formulario',
+                classes: ['leftAlign'],
+                heading: 'h2',
+                styles: {
+                    fontFamily: 'default',
+                    fontSize: 'default',
+                    fontStyles: [1, 0, 0] // bold, italic, underline
+                }
+            },
+            styles : {
+                color : 'default', // browser default
+                backgroundColor : 'default'
+            },
 			styles : {
 				color : 'default', // browser default
 				backgroundColor : 'default'	
-			}
+            }
 		},
 		_id: '#formbuilderContainer',
-		_languages : [ 'en', 'zh_CN' ],
+        _languages : [ 'en', 'zh_CN', 'es' ],
 		_builderPanel: '#builderPanel',
 		_builderForm: '#builderForm',
 		_emptyBuilderPanel: '#emptyBuilderPanel',
@@ -73,10 +87,23 @@ var FormBuilder = {
     _create: function() {
             // called on construction
         this._log('FormBuilder._create called. this.options.widgets = ' + this.options.widgets);
+        this._initTranslations();
         this._initBrowserDefaultSettings();
         this._initBuilderPalette();
         this._initBuilderPanel();
         this._initFieldsStyles();
+    },
+    _initTranslations: function() {
+        var locale = FbLocales();
+        locale.addTranslation('es', {
+            'No field was created. Please select standard field or fancy field.': "Ningún campo ha sido creado. Por favor, seleccione un campo estándar o uno sofisticado.",
+            "Please select field below to see it's Field Settings.": "Por favor, seleccione un campo para ver sus opciones.",
+            'Name': "Nombre",
+            'Heading': "Encabezado",
+            'Language': "Idioma"
+        });
+        // locale.addTranslation('zh_CN', {});
+        $.fb.formbuilder.prototype.translate = locale.translate;
     },
     _initBrowserDefaultSettings: function() {
         var $html = $('html');
@@ -178,7 +205,7 @@ var FormBuilder = {
 			var canOpen = true;
 			if ($(options._emptyBuilderPanel).is(':visible')) {
 				$(options._standardFieldsPanel).qtip({
-					   content: 'No field was created. Please select standard field or fancy field.',
+					   content: $.fb.formbuilder.prototype.translate('No field was created. Please select standard field or fancy field.'),
 						 position: { my: 'bottom left', at: 'top center' },
 							show: {
 								event: false,
@@ -197,7 +224,7 @@ var FormBuilder = {
 				canOpen = false;
 			} else if ($(options._builderForm + ' .' + $.fb.fbWidget.prototype.options._selectedClass).length === 0) {
 				$('.' + $.fb.fbWidget.prototype.options._styleClass + ':first').qtip({
-					   content: "Please select field below to see it's Field Settings.",
+					   content: $.fb.formbuilder.prototype.translate("Please select field below to see it's Field Settings."),
 						 position: { my: 'bottom center', at: 'top center' },
 							show: {
 								event: false,
@@ -316,7 +343,7 @@ var FormBuilder = {
 		
 		$fbWidget._log('settings.name = ' + settings.name);
 	  
-		var $name = $fbWidget._label({ label: 'Name', name: 'form.name' })
+		var $name = $fbWidget._label({ label: $(this)[0].translate('Name'), name: 'form.name' })
 		       .append('<input type="text" id="form.name" value="' + settings.name + '" />');
 		$('input', $name).keyup(function(event) {
 				var value = $(this).val();
@@ -334,15 +361,15 @@ var FormBuilder = {
 		
 
 		 var $heading = $fbWidget._label({ 
-			  label: 'Heading', 
+			  label: $(this)[0].translate('Heading'),
 			  name: 'form.heading' 
 	    }).append('<select> \
-				<option value="h1">Heading 1</option> \
-				<option value="h2">Heading 2</option> \
-				<option value="h3">Heading 3</option> \
-				<option value="h4">Heading 4</option> \
-				<option value="h5">Heading 5</option> \
-				<option value="h6">Heading 6</option> \
+				<option value="h1">' + $(this)[0].translate('Heading') + '1</option> \
+				<option value="h2">' + $(this)[0].translate('Heading') + ' 2</option> \
+				<option value="h3">' + $(this)[0].translate('Heading') + ' 3</option> \
+				<option value="h4">' + $(this)[0].translate('Heading') + ' 4</option> \
+				<option value="h5">' + $(this)[0].translate('Heading') + ' 5</option> \
+				<option value="h6">' + $(this)[0].translate('Heading') + ' 6</option> \
 			</select>');
 		
 		 $('select', $heading)
@@ -501,7 +528,7 @@ var FormBuilder = {
 		    var $widget = $(this);
 		    selected = $widget.attr('class').indexOf($.fb.fbWidget.prototype.options._selectedClass) > -1;
 		    if (selected) {
-		    	$(fbOptions._fieldSettingsLanguageSection + ' legend').text('Language: ' + languageText);
+		    	$(fbOptions._fieldSettingsLanguageSection + ' legend').text($(this)[0].translate('Language') + ': ' + languageText);
 		       }
 			  if (!$widget.data('fbWidget')) { // widgets loaded from server
 					var $settings = $widget.find("input[id$='fields[" + $widget.attr('rel') + "].settings']");
