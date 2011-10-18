@@ -25,7 +25,7 @@ def from_jquery_to_django_forms(form, form_data):
                 fields[field][attr] = form_data.get(key)
             else:
                 fields[field] = {attr: form_data.get(key)}
-    form_settings = json.loads(form_data.get('settings'))['en']
+    form_settings = json.loads(form_data.get('settings'))['es']
 
     form.title = form_settings['name']
     for key in fields.keys():
@@ -42,14 +42,14 @@ def from_jquery_to_django_forms(form, form_data):
         field.position = field_data['sequence']
         field.field_class = FIELDS_MAPPING[field_data['type']]
         field_settings = json.loads(field_data['settings'])
-        if 'label' in field_settings['en']:
-            field.label = field_settings['en']['label']
-        if 'description' in field_settings['en']:
-            field.help_text = field_settings['en']['description']
+        if 'label' in field_settings['es']:
+            field.label = field_settings['es']['label']
+        if 'description' in field_settings['es']:
+            field.help_text = field_settings['es']['description']
         if 'required' in field_settings:
             field.required = field_settings['required']
-        if 'value' in field_settings['en']:
-            field.initial = field_settings['en']['value']
+        if 'value' in field_settings['es']:
+            field.initial = field_settings['es']['value']
         if 'options' in field_settings:
             choice_labels = []
             choice_values = []
