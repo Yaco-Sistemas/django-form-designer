@@ -36,7 +36,7 @@ function FbLocales() {
                 if (languages.hasOwnProperty(lang)) {
                     for (key in translations) {
                         if (translations.hasOwnProperty(key)) {
-                            languages[lang] = translations[key];
+                            languages[lang][key] = translations[key];
                         }
                     }
                 } else {

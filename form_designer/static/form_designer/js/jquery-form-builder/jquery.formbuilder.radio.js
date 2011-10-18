@@ -19,9 +19,18 @@ var FbRadio = $.extend({}, $.fb.fbWidget.prototype, {
                 <div class="radioContainer"></div>\
                 <p class="formHint"></p></div>',
         _counterField: 'label',
-        _languages: [ 'en' ],
+        _languages: [ 'en', 'es' ],
         settings: {
             en: {
+                label: 'Radio',
+                description: '',
+                styles: {
+                    fontFamily: 'default', // form builder default
+                    fontSize: 'default',
+                    fontStyles: [0, 0, 0] // bold, italic, underline
+                }
+            },
+            es: {
                 label: 'Radio',
                 description: '',
                 styles: {
@@ -48,6 +57,10 @@ var FbRadio = $.extend({}, $.fb.fbWidget.prototype, {
     _init : function() {
         // calling base plugin init
         $.fb.fbWidget.prototype._init.call(this);
+        $.fb.fbWidget.prototype.addTranslation('es', {
+            'Add radio': "Añadir radio",
+            'Reset all radios': "Eliminar todos los radios"
+        });
         // merge base plugin's options
         this.options = $.extend({}, $.fb.fbWidget.prototype.options, this.options);
     },
@@ -65,7 +78,7 @@ var FbRadio = $.extend({}, $.fb.fbWidget.prototype, {
     _getFieldSettingsLanguageSection : function(event, fb) {
         fb.target._log('fbSelect._getFieldSettingsLanguageSection executing...');
         var $label = fb.target._label({
-            label: 'Label',
+            label: $.fb.fbWidget.prototype.translate('Label'),
             name: 'field.label'
         }).append('<input type="text" id="field.label" />');
         $('input', $label).val(fb.settings.label).keyup(function(event) {
@@ -75,7 +88,7 @@ var FbRadio = $.extend({}, $.fb.fbWidget.prototype, {
             fb.target._updateSettings(fb.item);
         });
         var $name = fb.target._label({
-            label: 'Name',
+            label: $.fb.fbWidget.prototype.translate('Name'),
             name: 'field.name'
         }).append('<input type="text" id="field.name" />');
         $('input', $name).val(fb.item.find("input[id$='fields[" + fb.item.attr('rel') + "].name']").val()).keyup(function(event) {
@@ -83,7 +96,7 @@ var FbRadio = $.extend({}, $.fb.fbWidget.prototype, {
             fb.target._updateName(fb.item, value);
         });
         var $description = fb.target._label({
-            label: 'Description',
+            label: $.fb.fbWidget.prototype.translate('Description'),
             name: 'field.description'
         }).append('<textarea id="field.description" rows="2"></textarea>');
         $('textarea', $description).val(fb.settings.description).keyup(function(event) {
@@ -160,10 +173,10 @@ var FbRadio = $.extend({}, $.fb.fbWidget.prototype, {
     },
     _getFieldSettingsGeneralSection : function(event, fb) {
         fb.target._log('fbSelect._getFieldSettingsGeneralSection executing...');
-        var $required = $('<div><input type="checkbox" id="field.required" />&nbsp;Required</div>');
-        var $readonly = $('<div><input type="checkbox" id="field.readonly" />&nbsp;Read-only</div>');
+        var $required = $('<div><input type="checkbox" id="field.required" />&nbsp;' + $.fb.fbWidget.prototype.translate('Required') + '</div>');
+        var $readonly = $('<div><input type="checkbox" id="field.readonly" />&nbsp;' + $.fb.fbWidget.prototype.translate('Read-only') + '</div>');
         var $valuePanel = fb.target._fieldset({
-            text: 'Value'
+            text: $.fb.fbWidget.prototype.translate('Value')
         }).append(fb.target._oneColumn($required)).append(fb.target._oneColumn($readonly));
         $('input', $required).attr('checked', fb.settings.required).change(function(event) {
             if ($(this).attr('checked')) {
@@ -185,13 +198,13 @@ var FbRadio = $.extend({}, $.fb.fbWidget.prototype, {
             fb.target._updateSettings(fb.item);
         });
 
-        var $addRadio = $('<div><label for="addRadioName">Name</label>&nbsp;<input id="addRadioName" type="text" />\
-            <label for="addRadioValue">Value</label>&nbsp;<input id="addRadioValue" type="text" />\
-            <span id="addRadioButton">Add radio</span>\
+        var $addRadio = $('<div><label for="addRadioName">' + $.fb.fbWidget.prototype.translate('Name') + '</label>&nbsp;<input id="addRadioName" type="text" />\
+            <label for="addRadioValue">' + $.fb.fbWidget.prototype.translate('Value') + '</label>&nbsp;<input id="addRadioValue" type="text" />\
+            <span id="addRadioButton">' + $.fb.fbWidget.prototype.translate('Add radio') + '</span>\
             <div style="clear: both;"></div>\
-            <span id="resetRadiosButton">Reset all radios</span></div>');
+            <span id="resetRadiosButton">' + $.fb.fbWidget.prototype.translate('Reset all radios') + '</span></div>');
         var $radioPanel = fb.target._fieldset({
-            text: 'Options'
+            text: $.fb.fbWidget.prototype.translate('Options')
         }).append(fb.target._oneColumn($addRadio));
         $('#addRadioButton', $addRadio).css('cursor', 'pointer').css('float', 'right').css('text-decoration', 'underline').css('margin-top', '5px').click(function(event) {
             var fieldset = $(this.parentNode.parentNode),

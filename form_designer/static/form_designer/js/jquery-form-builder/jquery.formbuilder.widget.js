@@ -27,33 +27,42 @@ var FbWidget = {
         this.element.click(this._createFbWidget);
     },
     _initTranslations: function() {
-        var locale = FbLocales();
-        locale.addTranslation('es', {
-            'delete this widget': "borrar este widget",
-            'Horizontal Align': "Alineamiento Horizontal",
-            'Left': "Izquierda",
-            'Center': "Centrado",
-            'Right': "Derecha",
-            'Vertical Align': "Alineamiento vertical",
-            'Top': "Arriba",
-            'Middle': "Centrado",
-            'Bottom': "Abajo",
-            'Name': "Nombre",
-            'Bold': "Negrita",
-            'Italic': "Cursiva",
-            'Underline': "Subrayado",
-            'Colors': "Colores",
-            'Text': "Texto",
-            'Background': "Fondo",
-            'Label': "Etiqueta",
-            'Value': "Valor",
-            'Description': "Descripción",
-            'Size': "Tamaño",
-            'Fonts': "Fuentes",
-            'Font': "Fuente"
-        });
-        $.fb.fbWidget.prototype.addTranslation = locale.addTranslation;
-        $.fb.fbWidget.prototype.translate = locale.translate;
+        if (!$.fb.fbWidget.prototype.translate) { // Init only once
+            var locale = FbLocales();
+            $.fb.fbWidget.prototype.addTranslation = locale.addTranslation;
+            $.fb.fbWidget.prototype.translate = locale.translate;
+            $.fb.fbWidget.prototype.addTranslation('es', {
+                'delete this widget': "borrar este widget",
+                'Horizontal Align': "Alineamiento Horizontal",
+                'Left': "Izquierda",
+                'Center': "Centrado",
+                'Right': "Derecha",
+                'Vertical Align': "Alineamiento vertical",
+                'Top': "Arriba",
+                'Middle': "Centrado",
+                'Bottom': "Abajo",
+                'Name': "Nombre",
+                'Bold': "Negrita",
+                'Italic': "Cursiva",
+                'Underline': "Subrayado",
+                'Colors': "Colores",
+                'Text': "Texto",
+                'Background': "Fondo",
+                'Label': "Etiqueta",
+                'Value': "Valor",
+                'Description': "Descripción",
+                'Size': "Tamaño",
+                'Fonts': "Fuentes",
+                'Font': "Fuente",
+                'Required': "Obligatorio",
+                'Read-only': "Sólo lectura",
+                'any character': "cualquier carácter",
+                'alphanumeric only': "sólo alfanuméricos",
+                'letters or punctuation only': "sólo letras o símbolos de puntuación",
+                'letters only': "sólo letras",
+                'Options': "Opciones"
+            });
+        }
     },
 	destroy: function() {
 	  this._log('FbWidget.destroy called.');
@@ -420,9 +429,9 @@ var FbWidget = {
  		o.label = o.label ? o.label : $.fb.fbWidget.prototype.translate('Vertical Align'); 
  		var $verticalAlignment = this._label(o)
 		 .append('<select> \
-				<option value="topAlign">' + $.fb.fbWidget.prototype.translate('top') + '</option> \
-				<option value="middleAlign">' + $.fb.fbWidget.prototype.translate('middle') + '</option> \
-				<option value="bottomAlign">' + $.fb.fbWidget.prototype.translate('bottom') + '</option> \
+				<option value="topAlign">' + $.fb.fbWidget.prototype.translate('Top') + '</option> \
+				<option value="middleAlign">' + $.fb.fbWidget.prototype.translate('Middle') + '</option> \
+				<option value="bottomAlign">' + $.fb.fbWidget.prototype.translate('Bottom') + '</option> \
 			</select></div>');
 		$('select', $verticalAlignment).val(o.value).attr('id', o.name);	
 		return $verticalAlignment;			

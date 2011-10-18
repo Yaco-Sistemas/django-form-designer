@@ -19,7 +19,7 @@ var FormBuilder = {
 		readOnly: false,
 		tabDisabled: [],
 		formCounter: 1,
-		language: 'en',
+		language: 'es',
 		imageDir: '/static/form_designer/images/',
 		settings: {
 			en: {
@@ -96,7 +96,7 @@ var FormBuilder = {
     _initTranslations: function() {
         var locale = FbLocales();
         locale.addTranslation('es', {
-            'No field was created. Please select standard field or fancy field.': "Ningún campo ha sido creado. Por favor, seleccione un campo estándar o uno sofisticado.",
+            'No field was created. Please select standard field or fancy field.': "Ningún campo ha sido creado. Por favor, seleccione algún campo.",
             "Please select field below to see it's Field Settings.": "Por favor, seleccione un campo para ver sus opciones.",
             'Name': "Nombre",
             'Heading': "Encabezado",

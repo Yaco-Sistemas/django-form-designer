@@ -19,7 +19,7 @@ var FbDate = $.extend({}, $.fb.fbWidget.prototype, {
 		      <input type="text" class="textInput" /> \
 	        <p class="formHint"></p></div>',
 		_counterField: 'label',
-		_languages: [ 'en', 'zh_CN' ],
+		_languages: [ 'en', 'zh_CN', 'es' ],
 		settings: {
 			en: {
 				label: 'Date',
@@ -41,6 +41,16 @@ var FbDate = $.extend({}, $.fb.fbWidget.prototype, {
 					fontStyles: [0, 0, 0] // bold, italic, underline					
 				}				
 			},
+            es: {
+                label: 'Fecha',
+                value: '',
+                description: '',
+                styles: {
+                    fontFamily: 'default', // form builder default
+                    fontSize: 'default',
+                    fontStyles: [0, 0, 0] // bold, italic, underline
+                }
+            },
 			_persistable: true,
 			required: true,
 			readonly: false,
@@ -81,7 +91,7 @@ var FbDate = $.extend({}, $.fb.fbWidget.prototype, {
 	},
 	_getFieldSettingsLanguageSection : function(event, fb) {
 		fb.target._log('fbDate._getFieldSettingsLanguageSection executing...');
-		var $label = fb.target._label({ label: 'Label', name: 'field.label' })
+		var $label = fb.target._label({ label: $.fb.fbWidget.prototype.translate('Label'), name: 'field.label' })
                          .append('<input type="text" id="field.label" />');
     $('input', $label).val(fb.settings.label)
      .keyup(function(event) {
@@ -91,14 +101,14 @@ var FbDate = $.extend({}, $.fb.fbWidget.prototype, {
 	      fb.target._updateSettings(fb.item);
          });
         var $name = fb.target._label({
-            label: 'Name',
+            label: $.fb.fbWidget.prototype.translate('Name'),
             name: 'field.name'
         }).append('<input type="text" id="field.name" />');
         $('input', $name).val(fb.item.find("input[id$='fields[" + fb.item.attr('rel') + "].name']").val()).keyup(function(event) {
             var value = $(this).val();
             fb.target._updateName(fb.item, value);
         });
-	  var $value = fb.target._label({ label: 'Value', name: 'field.value' })
+	  var $value = fb.target._label({ label: $.fb.fbWidget.prototype.translate('Value'), name: 'field.value' })
 		                      .append('<input type="text" id="field.value" />');
 		$('input', $value).val(fb.settings.value)
 		 .keyup(function(event) {
@@ -108,7 +118,7 @@ var FbDate = $.extend({}, $.fb.fbWidget.prototype, {
 		  fb.target._updateSettings(fb.item);
 		});    
 		
-		var $description = fb.target._label({ label: 'Description', name: 'field.description' })
+		var $description = fb.target._label({ label: $.fb.fbWidget.prototype.translate('Description'), name: 'field.description' })
           .append('<textarea id="field.description" rows="2"></textarea>');
 		$('textarea', $description).val(fb.settings.description)
 			.keyup(function(event) {
@@ -182,15 +192,15 @@ var FbDate = $.extend({}, $.fb.fbWidget.prototype, {
 	},
 	_getFieldSettingsGeneralSection : function(event, fb) {
 		fb.target._log('fbDate._getFieldSettingsGeneralSection executing...');
-		var $required = $('<div><input type="checkbox" id="field.required" />&nbsp;Required</div>');
-		var $readonly = $('<div><input type="checkbox" id="field.readonly" />&nbsp;Read-only</div>');
+		var $required = $('<div><input type="checkbox" id="field.required" />&nbsp;' + $.fb.fbWidget.prototype.translate('Required') + '</div>');
+		var $readonly = $('<div><input type="checkbox" id="field.readonly" />&nbsp;' + $.fb.fbWidget.prototype.translate('Read-only') + '</div>');
 		var $restriction = $('<div><select id="field.restriction" style="width: 99%"> \
-				<option value="no">any character</option> \
-				<option value="alphanumeric">alphanumeric only</option> \
-				<option value="letterswithbasicpunc">letters or punctuation only</option> \
-				<option value="lettersonly">letters only</option> \
+				<option value="no">' + $.fb.fbWidget.prototype.translate('any character') + '</option> \
+				<option value="alphanumeric">' + $.fb.fbWidget.prototype.translate('alphanumeric only') + '</option> \
+				<option value="letterswithbasicpunc">' + $.fb.fbWidget.prototype.translate('letters or punctuation only') + '</option> \
+				<option value="lettersonly">' + $.fb.fbWidget.prototype.translate('letters only') + '</option> \
 			</select></div>');
-		var $valuePanel = fb.target._fieldset({ text: 'Value'})
+		var $valuePanel = fb.target._fieldset({ text: $.fb.fbWidget.prototype.translate('Value')})
 		                  .append(fb.target._twoColumns($required, $restriction))
                                   .append(fb.target._oneColumn($readonly));
 		$('.col1', $valuePanel).css('width', '32%').removeClass('labelOnTop');

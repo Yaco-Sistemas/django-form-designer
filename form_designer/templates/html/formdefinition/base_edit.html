@@ -1,4 +1,5 @@
 {% extends base_template %}
+{% load i18n %}
 
 {% block content %}
 {{ block.super }}
@@ -48,15 +49,15 @@
         <div class="floatingPanel">
             <div id="paletteTabs">
                 <ul>
-                    <li><a href="#addField">Add Field</a></li>
-                    <li><a href="#fieldSettings">Field Settings</a></li>
-                    <li><a href="#formSettings">Form Settings</a></li>
+                    <li><a href="#addField">{% trans "Add Field" %}</a></li>
+                    <li><a href="#fieldSettings">{% trans "Field Settings" %}</a></li>
+                    <li><a href="#formSettings">{% trans "Form Settings" %}</a></li>
                 </ul>
                 <div id="addField">
-                    <strong>Standard Fields</strong>
+                    <strong>{% trans "Standard Fields" %}</strong>
                     <div id="standardFields"></div>
                     <br />
-                    <strong>Fancy Fields</strong>
+                    <strong>{% trans "Fancy Fields" %}</strong>
                     <div id="fancyFields"></div>
                 </div>
                 <div id="fieldSettings">
@@ -69,10 +70,10 @@
                 <div id="formSettings">
                     <fieldset class="language">
                         <legend>
-                            <label for="language">Language: </label>
+                            <label for="language">{% trans "Language" %}: </label>
                             <select id="language">
-                                <option value="en">English</option>
                                 <option value="es">Español</option>
+                                <option value="en">English</option>
                                 <option value="zh_CN">简体中文</option>
                             </select>
                         </legend>
@@ -88,11 +89,11 @@
         <div id="builderPanel">
             <div class="formHeading"></div>
             <fieldset>
-                <div id="emptyBuilderPanel">Start adding some fields from the menu on the left.</div>
+                <div id="emptyBuilderPanel">{% trans "Start adding some fields from the menu on the left." %}</div>
                 {% for field in fields %}
                 <div class="ctrlHolder" style="" rel="{{ forloop.counter0 }}">
                     <a class="ui-corner-all closeButton" href="#">
-                        <span class="ui-icon ui-icon-close">delete this widget</span>
+                        <span class="ui-icon ui-icon-close">{% trans "delete this widget" %}</span>
                     </a>
                     <div class="{{field.type}} {% if field.dict_settings.en.classes %}{% for class in  field.dict_settings.en.classes %}{{ class }} {% endfor %}{% endif %}">
                         {% if field.type == 'SingleLineText' %}

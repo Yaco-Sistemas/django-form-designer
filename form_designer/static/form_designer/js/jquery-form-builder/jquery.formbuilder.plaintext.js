@@ -18,7 +18,7 @@ var FbPlainText = $.extend({}, $.fb.fbWidget.prototype, {
 		_type : 'PlainText',
 		_html : '<div class="PlainText"></div>',
 		_counterField : 'text',
-		_languages : [ 'en', 'zh_CN' ],
+		_languages : [ 'en', 'zh_CN', 'es' ],
 		settings : {
 			en : {
 				text : 'Plain Text',
@@ -38,6 +38,15 @@ var FbPlainText = $.extend({}, $.fb.fbWidget.prototype, {
 					fontStyles: [0, 0, 0] // bold, italic, underline					
 				}				
 			},
+            es : {
+                text : 'Texto Plano',
+                classes : [ 'leftAlign', 'topAlign' ],
+                styles: {
+                    fontFamily: 'default', // form builder default
+                    fontSize: 'default',
+                    fontStyles: [0, 0, 0] // bold, italic, underline
+                }
+            },
 			styles : {
 				color : 'default',
 				backgroundColor : 'default'
@@ -54,7 +63,7 @@ var FbPlainText = $.extend({}, $.fb.fbWidget.prototype, {
 				.addClass(fb.settings.classes[0]);
 	},
 	_getFieldSettingsLanguageSection : function(event, fb) {
-		var $text = fb.target._label({ label: 'Text', name: 'field.text', 
+		var $text = fb.target._label({ label: $.fb.fbWidget.prototype.translate('Text'), name: 'field.text', 
 			                 description: 'Text entered below will display in the form.' })
 		           .append('<input type="text" id="field.text" />');
 				$('input', $text).val(fb.settings.text)

@@ -19,10 +19,19 @@ var FbSelect = $.extend({}, $.fb.fbWidget.prototype, {
                 <select class="select"></select> \
                 <p class="formHint"></p></div>',
         _counterField: 'label',
-        _languages: [ 'en' ],
+        _languages: [ 'en', 'es' ],
         settings: {
             en: {
                 label: 'Select',
+                description: '',
+                styles: {
+                    fontFamily: 'default', // form builder default
+                    fontSize: 'default',
+                    fontStyles: [0, 0, 0] // bold, italic, underline
+                }
+            },
+            es: {
+                label: 'Selector',
                 description: '',
                 styles: {
                     fontFamily: 'default', // form builder default
@@ -48,6 +57,10 @@ var FbSelect = $.extend({}, $.fb.fbWidget.prototype, {
     _init : function() {
         // calling base plugin init
         $.fb.fbWidget.prototype._init.call(this);
+        $.fb.fbWidget.prototype.addTranslation('es', {
+            'Add option': "Añadir opción",
+            'Reset all options': "Eliminar todas las opciones"
+        });
         // merge base plugin's options
         this.options = $.extend({}, $.fb.fbWidget.prototype.options, this.options);
     },
@@ -65,7 +78,7 @@ var FbSelect = $.extend({}, $.fb.fbWidget.prototype, {
     _getFieldSettingsLanguageSection : function(event, fb) {
         fb.target._log('fbSelect._getFieldSettingsLanguageSection executing...');
         var $label = fb.target._label({
-            label: 'Label',
+            label: $.fb.fbWidget.prototype.translate('Label'),
             name: 'field.label'
         }).append('<input type="text" id="field.label" />');
         $('input', $label).val(fb.settings.label).keyup(function(event) {
@@ -75,7 +88,7 @@ var FbSelect = $.extend({}, $.fb.fbWidget.prototype, {
             fb.target._updateSettings(fb.item);
         });
         var $name = fb.target._label({
-            label: 'Name',
+            label: $.fb.fbWidget.prototype.translate('Name'),
             name: 'field.name'
         }).append('<input type="text" id="field.name" />');
         $('input', $name).val(fb.item.find("input[id$='fields[" + fb.item.attr('rel') + "].name']").val()).keyup(function(event) {
@@ -83,7 +96,7 @@ var FbSelect = $.extend({}, $.fb.fbWidget.prototype, {
             fb.target._updateName(fb.item, value);
         });
         var $description = fb.target._label({
-            label: 'Description',
+            label: $.fb.fbWidget.prototype.translate('Description'),
             name: 'field.description'
         }).append('<textarea id="field.description" rows="2"></textarea>');
         $('textarea', $description).val(fb.settings.description).keyup(function(event) {
@@ -160,10 +173,10 @@ var FbSelect = $.extend({}, $.fb.fbWidget.prototype, {
     },
     _getFieldSettingsGeneralSection : function(event, fb) {
         fb.target._log('fbSelect._getFieldSettingsGeneralSection executing...');
-        var $required = $('<div><input type="checkbox" id="field.required" />&nbsp;Required</div>');
-        var $readonly = $('<div><input type="checkbox" id="field.readonly" />&nbsp;Read-only</div>');
+        var $required = $('<div><input type="checkbox" id="field.required" />&nbsp;' + $.fb.fbWidget.prototype.translate('Required') + '</div>');
+        var $readonly = $('<div><input type="checkbox" id="field.readonly" />&nbsp;' + $.fb.fbWidget.prototype.translate('Read-only') + '</div>');
         var $valuePanel = fb.target._fieldset({
-            text: 'Value'
+            text: $.fb.fbWidget.prototype.translate('Value')
         }).append(fb.target._oneColumn($required))
           .append(fb.target._oneColumn($readonly));
         $('input', $required).attr('checked', fb.settings.required).change(function(event) {
@@ -186,13 +199,13 @@ var FbSelect = $.extend({}, $.fb.fbWidget.prototype, {
             fb.target._updateSettings(fb.item);
         });
 
-        var $addOption = $('<div><label for="addOptionName">Name</label>&nbsp;<input id="addOptionName" type="text" />\
-            <label for="addOptionValue">Value</label>&nbsp;<input id="addOptionValue" type="text" />\
-            <span id="addOptionButton">Add option</span>\
+        var $addOption = $('<div><label for="addOptionName">' + $.fb.fbWidget.prototype.translate('Name') + '</label>&nbsp;<input id="addOptionName" type="text" />\
+            <label for="addOptionValue">' + $.fb.fbWidget.prototype.translate('Value') + '</label>&nbsp;<input id="addOptionValue" type="text" />\
+            <span id="addOptionButton">' + $.fb.fbWidget.prototype.translate('Add option') + '</span>\
             <div style="clear: both;"></div>\
-            <span id="resetOptionsButton">Reset all options</span></div>');
+            <span id="resetOptionsButton">' + $.fb.fbWidget.prototype.translate('Reset all options') + '</span></div>');
         var $optionPanel = fb.target._fieldset({
-            text: 'Options'
+            text: $.fb.fbWidget.prototype.translate('Options')
         }).append(fb.target._oneColumn($addOption));
         $('#addOptionButton', $addOption).css('cursor', 'pointer').css('float', 'right').css('text-decoration', 'underline').css('margin-top', '5px').click(function(event) {
             var fieldset = $(this.parentNode.parentNode),
