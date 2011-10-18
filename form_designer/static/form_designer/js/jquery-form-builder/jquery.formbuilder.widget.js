@@ -60,7 +60,8 @@ var FbWidget = {
                 'alphanumeric only': "sólo alfanuméricos",
                 'letters or punctuation only': "sólo letras o símbolos de puntuación",
                 'letters only': "sólo letras",
-                'Options': "Opciones"
+                'Options': "Opciones",
+                'Language': "Lenguaje"
             });
         }
     },
@@ -230,7 +231,7 @@ var FbWidget = {
         var settings = $widget.data('fbWidget');
         var $languageSection = $(fbOptions._fieldSettingsLanguageSection);
         var $language = $('#language');
-        $('legend', $languageSection).text('Language: ' + $language.find('option:selected').text());
+        $('legend', $languageSection).text($.fb.fbWidget.prototype.translate('Language') + ': ' + $language.find('option:selected').text());
         var fbLanguageSection = {target: $this, item: $widget, settings: settings[$language.val()]};
         var fieldSettings = $this._getFieldSettingsLanguageSection(event, fbLanguageSection);
         // remote all child nodes except legend
