@@ -74,7 +74,7 @@ var FormBuilder = {
         _fieldSettingsGeneralSection: '#fieldSettings div.general:first',
         _formSettingsLanguageSection: '#formSettings fieldset.language:first',
         _formSettingsGeneralSection: '#formSettings div.general:first',
-        _languagesSupportIdGeneration: ['en'],
+        _languagesSupportIdGeneration: ['en', 'es'],
         _dragBoxCss: {
             opacity: 0.6,
             zIndex: 8888,
