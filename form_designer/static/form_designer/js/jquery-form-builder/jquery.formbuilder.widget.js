@@ -61,7 +61,8 @@ var FbWidget = {
                 'letters or punctuation only': "sólo letras o símbolos de puntuación",
                 'letters only': "sólo letras",
                 'Options': "Opciones",
-                'Language': "Lenguaje"
+                'Language': "Lenguaje",
+                "The field name must only contain letters, numbers and the sign _. It must begin with a letter or the sign _": "El campo nombre debe contener únicamente letras, números y el signo _. Debe comenzar con una letra o el signo _"
             });
         }
     },
@@ -369,6 +370,25 @@ var FbWidget = {
                 $.inArray($('#language').val(), fbOptions._languagesSupportIdGeneration) > -1) {
             var name = this._propertyName(value);
             $widget.find("input[id$='fields[" + index + "].name']").val(name).change();
+        }
+        if (value.match(/^[a-zA-Z_][a-zA-Z_0-9]*$/) == value) {
+            $('#field\\.name').qtip('hide');
+        } else {
+            $('#field\\.name').qtip({
+                content: $.fb.fbWidget.prototype.translate("The field name must only contain letters, numbers and the sign _. It must begin with a letter or the sign _"),
+                position: { my: 'bottom center', at: 'top center' },
+                show: {
+                    event: false,
+                    ready: true,
+                    delay: 0
+                },
+                hide: 'fixed',
+                style: {
+                    widget: true,
+                    classes: 'ui-tooltip-shadow ui-tooltip-rounded',
+                    tip: true
+                }
+            });
         }
     } ,
   _threeColumns: function($e1, $e2, $e3) {
