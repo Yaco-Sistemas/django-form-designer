@@ -1,5 +1,6 @@
 import json
 
+from django.conf import settings
 from form_designer.models import FormDefinitionField
 
 
@@ -31,48 +32,56 @@ def from_jquery_to_django_forms(form, form_data):
     for key in fields.keys():
         field_data = fields[key]
         if not field_data['id'] or field_data['id'] == 'null':
-            field = FormDefinitionField.objects.create(form_definition=form)
+            field = FormDefinitionField(form_definition=form)
         else:
-            field = FormDefinitionField.objects.get_or_create(id=field_data['id'],
-                                                              form_definition=form)[0]
-        if field_data['status'] == 'D':
+            try:
+                field = FormDefinitionField.objects.get(id=field_data['id'],
+                                                        form_definition=form)
+            except FormDefinitionField.DoesNotExists:
+                field = FormDefinitionField(id=field_data['id'],
+                                            form_definition=form)
+        if field_data['status'] == 'D' and field.pk:
             field.delete()
             continue
         field.name = field_data['name'].encode('ascii', 'ignore')
         field.position = field_data['sequence']
         field.field_class = FIELDS_MAPPING[field_data['type']]
         field_settings = json.loads(field_data['settings'])
-        if 'label' in field_settings['es']:
-            field.label = field_settings['es']['label']
-        if 'description' in field_settings['es']:
-            field.help_text = field_settings['es']['description']
-        if 'required' in field_settings:
-            field.required = field_settings['required']
-        if 'value' in field_settings['es']:
-            field.initial = field_settings['es']['value']
-        if 'options' in field_settings:
+        field_settings_lang = field_settings[settings.LANGUAGE_CODE]
+
+        field.label = field_settings_lang.get('label', None)
+        field.help_text = field_settings_lang.get('description', None)
+        field.required = field_settings_lang.get('required', None)
+        field.initial = field_settings_lang.get('value', None)
+
+        options = field_settings.get('options', [])
+        if options:
             choice_labels = []
             choice_values = []
-            for opt in field_settings['options']:
+            for opt in options:
                 choice_labels.append(opt[0])
                 choice_values.append(opt[1])
             field.choice_labels = "\n".join(choice_labels)
             field.choice_values = "\n".join(choice_values)
-        if 'radios' in field_settings:
-            field.widget = 'django.forms.widgets.RadioSelect'
+
+        radios = field_settings.get('radios', [])
+        if radios:
             choice_labels = []
             choice_values = []
-            for rad in field_settings['radios']:
+            field.widget = 'django.forms.widgets.RadioSelect'
+            for rad in radios:
                 choice_labels.append(rad[0])
                 choice_values.append(rad[1])
             field.choice_labels = "\n".join(choice_labels)
             field.choice_values = "\n".join(choice_values)
+
+        if field_data['type'] == 'TextField':
+            field.widget = 'django.forms.widgets.Textarea'
+
         field.form_builder_settings = {
             'settings': field_settings,
             'type': field_data['type'],
             }
-        if field_data['type'] == 'TextField':
-            field.widget = 'django.forms.widgets.Textarea'
         field.save()
     form.save()
 
