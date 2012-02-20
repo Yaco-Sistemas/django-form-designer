@@ -122,5 +122,6 @@ def save(request, object_name):
     from_jquery_to_django_forms(form, request.POST)
     redirect_to = request.REQUEST.get('redirect_to', None)
     if redirect_to:
+        messages.add_message(request, messages.INFO, _('Form save successfully'))
         return HttpResponseRedirect(redirect_to)
     return redirect('form_designer_detail', object_name=object_name)
