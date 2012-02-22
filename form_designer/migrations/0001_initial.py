@@ -2,6 +2,7 @@
 import datetime
 from south.db import db
 from south.v2 import SchemaMigration
+from django.conf import settings
 from django.db import models
 
 class Migration(SchemaMigration):
@@ -67,15 +68,14 @@ class Migration(SchemaMigration):
         db.send_create_signal('form_designer', ['FormDefinitionField'])
 
         # Adding model 'CMSFormDefinition'
-        db.create_table('cmsplugin_cmsformdefinition', (
-            ('cmsplugin_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['cms.CMSPlugin'], unique=True, primary_key=True)),
-            ('form_definition', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['form_designer.FormDefinition'])),
-        ))
-        db.send_create_signal('form_designer', ['CMSFormDefinition'])
-
+        if 'cms' in settings.INSTALLED_APPS:
+            db.create_table('cmsplugin_cmsformdefinition', (
+                ('cmsplugin_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['cms.CMSPlugin'], unique=True, primary_key=True)),
+                ('form_definition', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['form_designer.FormDefinition'])),
+            ))
+            db.send_create_signal('form_designer', ['CMSFormDefinition'])
 
     def backwards(self, orm):
-        
         # Deleting model 'FormDefinition'
         db.delete_table('form_designer_formdefinition')
 
@@ -85,9 +85,9 @@ class Migration(SchemaMigration):
         # Deleting model 'FormDefinitionField'
         db.delete_table('form_designer_formdefinitionfield')
 
-        # Deleting model 'CMSFormDefinition'
-        db.delete_table('cmsplugin_cmsformdefinition')
-
+        if 'cms' in settings.INSTALLED_APPS:
+            # Deleting model 'CMSFormDefinition'
+            db.delete_table('cmsplugin_cmsformdefinition')
 
     models = {
         'cms.cmsplugin': {
