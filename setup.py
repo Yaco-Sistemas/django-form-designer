@@ -9,7 +9,7 @@ README = read('README.md')
 
 setup(
     name = "django-form-designer",
-    version = "0.1a8",
+    version = "0.1a9",
     url = 'http://github.com/philomat/django-form-designer',
     license = 'BSD',
     description = "Design contact forms, search forms etc from the Django admin, without writing any code. Integrates with Django CMS.",
@@ -25,6 +25,7 @@ setup(
     package_data = {
         'form_designer': [
             'static/form_designer/js/*.js',
+            'static/form_designer/js/jquery-form-builder/*.js',
             'templates/admin/form_designer/formlog/change_list.html',
             'templates/html/formdefinition/*.html',
             'templates/html/formdefinition/forms/*.html',
