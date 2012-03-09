@@ -12,6 +12,7 @@ from django.utils.importlib import import_module
 from picklefield.fields import PickledObjectField
 
 from form_designer.fields import TemplateTextField, TemplateCharField, ModelNameField, RegexpExpressionField
+from form_designer.managers import FormDefinitionManager, FormDefinitionFieldManager
 from form_designer import settings
 
 def get_class(import_path):
@@ -56,9 +57,14 @@ class FormDefinition(models.Model):
     form_template_name = models.CharField(_('Form template'), max_length=255, choices=settings.FORM_TEMPLATES, blank=True, null=True)
     display_logged = models.BooleanField(_('Display logged submissions with form'), default=False)
 
+    objects = FormDefinitionManager()
+
     class Meta:
         verbose_name = _('Form')
         verbose_name_plural = _('Forms')
+
+    def natural_key(self):
+        return (self.name,)
 
     def save(self, *args, **kwargs):
         if not self.private_hash:
@@ -210,9 +216,15 @@ class FormDefinitionField(models.Model):
 
     form_builder_settings = PickledObjectField(default=None, null=True)
 
+    objects = FormDefinitionFieldManager()
+
     class Meta:
         verbose_name = _('Field')
         verbose_name_plural = _('Fields')
+
+    def natural_key(self):
+        return (self.name, self.form_definition.natural_key())
+
 
     def save(self, *args, **kwargs):
         if self.position == None:
