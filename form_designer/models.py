@@ -221,25 +221,16 @@ class FormDefinitionField(models.Model):
     class Meta:
         verbose_name = _('Field')
         verbose_name_plural = _('Fields')
+        ordering = ['position']
 
     def natural_key(self):
-        return (self.name, self.form_definition.natural_key())
+        return (self.name, ) + self.form_definition.natural_key()
 
 
     def save(self, *args, **kwargs):
         if self.position == None:
             self.position = 0
         super(FormDefinitionField, self).save(*args, **kwargs)
-
-    def ____init__(self, field_class=None, name=None, required=None, widget=None, label=None, initial=None, help_text=None, *args, **kwargs):
-        super(FormDefinitionField, self).__init__(*args, **kwargs)
-        self.name = name
-        self.field_class = field_class  
-        self.required = required
-        self.widget = widget
-        self.label = label
-        self.initial = initial
-        self.help_text = help_text
 
     def get_form_field_init_args(self, field_class):
         args = {
@@ -315,11 +306,6 @@ class FormDefinitionField(models.Model):
             'widget': widget(attrs=attrs)
         })
         return args
-
-    class Meta:
-        verbose_name = _('Field')
-        verbose_name_plural = _('Fields')
-        ordering = ['position']
 
     def __unicode__(self):
         return self.label if self.label else self.name
