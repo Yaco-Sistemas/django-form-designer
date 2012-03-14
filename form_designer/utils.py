@@ -49,10 +49,10 @@ def from_jquery_to_django_forms(form, form_data):
         field_settings = json.loads(field_data['settings'])
         field_settings_lang = field_settings[settings.LANGUAGE_CODE]
 
-        field.label = field_settings_lang.get('label', None)
-        field.help_text = field_settings_lang.get('description', None)
-        field.required = field_settings_lang.get('required', None)
-        field.initial = field_settings_lang.get('value', None)
+        field.label = field_settings_lang.get('label', '')
+        field.help_text = field_settings_lang.get('description', '')
+        field.required = field_settings_lang.get('required', False)
+        field.initial = field_settings_lang.get('value', '')
 
         options = field_settings.get('options', [])
         if options:
