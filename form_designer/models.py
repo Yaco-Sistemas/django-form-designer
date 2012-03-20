@@ -9,6 +9,8 @@ from django.conf import settings as django_settings
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.importlib import import_module
 
+from transmeta import TransMeta
+
 from picklefield.fields import PickledObjectField
 
 from form_designer.fields import TemplateTextField, TemplateCharField, ModelNameField, RegexpExpressionField
@@ -33,6 +35,9 @@ def get_class(import_path):
                                    'class.' % (module, classname))
 
 class FormDefinition(models.Model):
+
+    __metaclass__ = TransMeta
+
     name = models.SlugField(_('Name'), max_length=255, unique=True)
     require_hash = models.BooleanField(_('Obfuscate URL to this form'), default=False, help_text=_('If enabled, the form can only be reached via a secret URL.'))
     private_hash = models.CharField(editable=False, max_length=40, default='')
@@ -62,6 +67,7 @@ class FormDefinition(models.Model):
     class Meta:
         verbose_name = _('Form')
         verbose_name_plural = _('Forms')
+        translate = ('title', 'body', 'success_message', 'error_message', 'submit_label')
 
     def natural_key(self):
         return (self.name,)
@@ -186,6 +192,8 @@ class FormLog(models.Model):
 
 class FormDefinitionField(models.Model):
 
+    __metaclass__ = TransMeta
+
     form_definition = models.ForeignKey(FormDefinition)
     field_class = models.CharField(_('Field class'), choices=settings.FIELD_CLASSES, max_length=32)
     position = models.IntegerField(_('Position'), blank=True, null=True)
@@ -222,6 +230,7 @@ class FormDefinitionField(models.Model):
         verbose_name = _('Field')
         verbose_name_plural = _('Fields')
         ordering = ['position']
+        translate = ('label', 'initial', 'help_text', 'choice_labels')
 
     def natural_key(self):
         return (self.name, ) + self.form_definition.natural_key()

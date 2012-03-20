@@ -1,4 +1,5 @@
 import json
+import transmeta
 
 from django.conf import settings
 from form_designer.models import FormDefinitionField
@@ -28,7 +29,7 @@ def from_jquery_to_django_forms(form, form_data):
                 fields[field] = {attr: form_data.get(key)}
     form_settings = json.loads(form_data.get('settings'))['es']
 
-    form.title = form_settings['name']
+    setattr(form, transmeta.get_fallback_fieldname('title'), form_settings['name'])
     for key in fields.keys():
         field_data = fields[key]
         if not field_data['id'] or field_data['id'] == 'null':
@@ -49,10 +50,10 @@ def from_jquery_to_django_forms(form, form_data):
         field_settings = json.loads(field_data['settings'])
         field_settings_lang = field_settings[settings.LANGUAGE_CODE]
 
-        field.label = field_settings_lang.get('label', '')
-        field.help_text = field_settings_lang.get('description', '')
+        setattr(field, transmeta.get_fallback_fieldname('label'), field_settings_lang.get('label', ''))
+        setattr(field, transmeta.get_fallback_fieldname('help_text'), field_settings_lang.get('description', ''))
+        setattr(field, transmeta.get_fallback_fieldname('initial'), field_settings_lang.get('value', ''))
         field.required = field_settings_lang.get('required', False)
-        field.initial = field_settings_lang.get('value', '')
 
         options = field_settings.get('options', [])
         if options:
