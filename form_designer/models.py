@@ -230,6 +230,7 @@ class FormDefinitionField(models.Model):
         verbose_name = _('Field')
         verbose_name_plural = _('Fields')
         ordering = ['position']
+        unique_together = (('name', 'form_definition'),)
         translate = ('label', 'initial', 'help_text', 'choice_labels')
 
     def natural_key(self):
