@@ -62,7 +62,7 @@ def from_jquery_to_django_forms(form, form_data):
             for opt in options:
                 choice_labels.append(opt[0])
                 choice_values.append(opt[1])
-            field.choice_labels = "\n".join(choice_labels)
+            setattr(field, transmeta.get_fallback_fieldname('choice_labels'), "\n".join(choice_labels))
             field.choice_values = "\n".join(choice_values)
 
         radios = field_settings.get('radios', [])
@@ -73,7 +73,7 @@ def from_jquery_to_django_forms(form, form_data):
             for rad in radios:
                 choice_labels.append(rad[0])
                 choice_values.append(rad[1])
-            field.choice_labels = "\n".join(choice_labels)
+            setattr(field, transmeta.get_fallback_fieldname('choice_labels'), "\n".join(choice_labels))
             field.choice_values = "\n".join(choice_values)
 
         if field_data['type'] == 'TextField':
