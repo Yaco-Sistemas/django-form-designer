@@ -1,4 +1,5 @@
 import json
+import transmeta
 
 from django.conf import settings
 from form_designer.models import FormDefinitionField
@@ -28,7 +29,7 @@ def from_jquery_to_django_forms(form, form_data):
                 fields[field] = {attr: form_data.get(key)}
     form_settings = json.loads(form_data.get('settings'))['es']
 
-    form.title = form_settings['name']
+    setattr(form, transmeta.get_fallback_fieldname('title'), form_settings['name'])
     for key in fields.keys():
         field_data = fields[key]
         if not field_data['id'] or field_data['id'] == 'null':
@@ -49,10 +50,10 @@ def from_jquery_to_django_forms(form, form_data):
         field_settings = json.loads(field_data['settings'])
         field_settings_lang = field_settings[settings.LANGUAGE_CODE]
 
-        field.label = field_settings_lang.get('label', None)
-        field.help_text = field_settings_lang.get('description', None)
-        field.required = field_settings_lang.get('required', None)
-        field.initial = field_settings_lang.get('value', None)
+        setattr(field, transmeta.get_fallback_fieldname('label'), field_settings_lang.get('label', ''))
+        setattr(field, transmeta.get_fallback_fieldname('help_text'), field_settings_lang.get('description', ''))
+        setattr(field, transmeta.get_fallback_fieldname('initial'), field_settings_lang.get('value', ''))
+        field.required = field_settings_lang.get('required', False)
 
         options = field_settings.get('options', [])
         if options:
@@ -61,7 +62,7 @@ def from_jquery_to_django_forms(form, form_data):
             for opt in options:
                 choice_labels.append(opt[0])
                 choice_values.append(opt[1])
-            field.choice_labels = "\n".join(choice_labels)
+            setattr(field, transmeta.get_fallback_fieldname('choice_labels'), "\n".join(choice_labels))
             field.choice_values = "\n".join(choice_values)
 
         radios = field_settings.get('radios', [])
@@ -72,7 +73,7 @@ def from_jquery_to_django_forms(form, form_data):
             for rad in radios:
                 choice_labels.append(rad[0])
                 choice_values.append(rad[1])
-            field.choice_labels = "\n".join(choice_labels)
+            setattr(field, transmeta.get_fallback_fieldname('choice_labels'), "\n".join(choice_labels))
             field.choice_values = "\n".join(choice_values)
 
         if field_data['type'] == 'TextField':

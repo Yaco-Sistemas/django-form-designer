@@ -1,4 +1,5 @@
 import csv
+import transmeta
 from django.contrib import admin
 from django.utils.translation import ugettext as _, ugettext_lazy
 from django.conf.urls.defaults import patterns, url
@@ -24,22 +25,28 @@ class FormDefinitionFieldInline(admin.StackedInline):
     model = FormDefinitionField
     extra = 1
     fieldsets = [
-        (_('Basic'), {'fields': ['name', 'field_class', 'required', 'initial']}),
-        (_('Display'), {'fields': ['label', 'widget', 'help_text', 'position', 'include_result']}),
+        (_('Basic'), {'fields': ['name', 'field_class', 'required'] + transmeta.get_real_fieldname_in_each_language('initial')}),
+        (_('Display'), {'fields': (transmeta.get_real_fieldname_in_each_language('label') + 
+                                   transmeta.get_real_fieldname_in_each_language('help_text') + 
+                                   ['widget', 'position', 'include_result'])}),
         (_('Text'), {'fields': ['max_length', 'min_length']}),
         (_('Numbers'), {'fields': ['max_value', 'min_value', 'max_digits', 'decimal_places']}),
         (_('Regex'), {'fields': ['regex']}),
-        (_('Choices'), {'fields': ['choice_values', 'choice_labels']}),
+        (_('Choices'), {'fields': ['choice_values'] + transmeta.get_real_fieldname_in_each_language('choice_labels')}),
         (_('Model Choices'), {'fields': ['choice_model', 'choice_model_empty_label']}),
     ]
 
 class FormDefinitionAdmin(admin.ModelAdmin):
     fieldsets = [
-        (_('Basic'), {'fields': ['name', 'require_hash', 'method', 'action', 'title', 'body']}),
+        (_('Basic'), {'fields': ['name', 'require_hash', 'method', 'action'] +
+                                 transmeta.get_real_fieldname_in_each_language('title') +
+                                 transmeta.get_real_fieldname_in_each_language('body')}),
         (_('Settings'), {'fields': ['allow_get_initial', 'log_data', 'success_redirect', 'success_clear', 'display_logged', 'save_uploaded_files'], 'classes': ['collapse']}),
         (_('Mail form'), {'fields': ['mail_to', 'mail_from', 'mail_subject', 'mail_uploaded_files'], 'classes': ['collapse']}),
         (_('Templates'), {'fields': ['message_template', 'form_template_name'], 'classes': ['collapse']}),
-        (_('Messages'), {'fields': ['success_message', 'error_message', 'submit_label'], 'classes': ['collapse']}),
+        (_('Messages'), {'fields': (transmeta.get_real_fieldname_in_each_language('success_message') +
+                                    transmeta.get_real_fieldname_in_each_language('error_message') +
+                                    transmeta.get_real_fieldname_in_each_language('submit_label')), 'classes': ['collapse']}),
     ]
     list_display = ('name', 'title', 'method', 'count_fields')
     form = FormDefinitionForm
