@@ -8,91 +8,92 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-04 12:54+0200\n"
+"POT-Creation-Date: 2012-03-28 14:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: admin.py:27 admin.py:38
+#: admin.py:28 admin.py:41
 msgid "Basic"
 msgstr "Básico"
 
-#: admin.py:28
+#: admin.py:29
 msgid "Display"
 msgstr "Visualización"
 
-#: admin.py:29 settings.py:8
+#: admin.py:32 settings.py:8
 msgid "Text"
 msgstr "Texto"
 
-#: admin.py:30
+#: admin.py:33
 msgid "Numbers"
 msgstr "Números"
 
-#: admin.py:31 settings.py:21
+#: admin.py:34 settings.py:21
 msgid "Regex"
 msgstr "Expresión regular"
 
-#: admin.py:32
+#: admin.py:35
 msgid "Choices"
 msgstr "Opciones"
 
-#: admin.py:33
+#: admin.py:36
 msgid "Model Choices"
 msgstr "Opciones de Modelo"
 
-#: admin.py:39
+#: admin.py:44
 msgid "Settings"
-msgstr "Clonfiguración"
+msgstr "Configuración"
 
-#: admin.py:40
+#: admin.py:45
 msgid "Mail form"
 msgstr "Formulario de E-mail"
 
-#: admin.py:41
+#: admin.py:46
 msgid "Templates"
 msgstr "Plantillas"
 
-#: admin.py:42
+#: admin.py:47
 msgid "Messages"
 msgstr "Mensajes"
 
-#: admin.py:63 admin.py:102 admin.py:147 cms_plugins.py:12 models.py:60
-#: models.py:173 models.py:317
+#: admin.py:70 admin.py:109 admin.py:154 cms_plugins.py:12 models.py:68
+#: models.py:185 models.py:327
 msgid "Form"
 msgstr "Formulario"
 
-#: admin.py:78 models.py:174
+#: admin.py:85 models.py:186
 msgid "Data"
 msgstr "Dato"
 
-#: admin.py:104 admin.py:149 models.py:172
+#: admin.py:111 admin.py:156 models.py:184
 msgid "Created"
 msgstr "Creado"
 
-#: admin.py:106 admin.py:151
+#: admin.py:113 admin.py:158
 msgid "ID"
 msgstr "ID"
 
-#: admin.py:125
+#: admin.py:132
 #, python-format
 msgid "Export selected %(verbose_name_plural)s as CSV"
 msgstr "Exportar seleccionados %(verbose_name_plural)s como CSV"
 
-#: admin.py:173
+#: admin.py:180
 #, python-format
 msgid "Export selected %(verbose_name_plural)s as XLS"
 msgstr "Exportar seleccionados %(verbose_name_plural)s como XLS"
 
-#: admin.py:185
+#: admin.py:192
 msgid "CSV export is not enabled."
 msgstr "La exportación a CSV no está habilitada."
 
-#: admin.py:190
+#: admin.py:197
 msgid "XLS export is not enabled."
 msgstr "La exportación a XLS no está habilitada."
 
@@ -104,31 +105,33 @@ msgstr "Este tipo de campo requiere una expresión regular."
 msgid "This field class requires a model."
 msgstr "Este tipo de campo requiere un modelo"
 
-#: models.py:35 models.py:187
+#: models.py:41 models.py:201
 msgid "Name"
 msgstr "Nombre"
 
-#: models.py:36
+#: models.py:42
 msgid "Obfuscate URL to this form"
 msgstr "Ofuscación de URL para este formulario"
 
-#: models.py:36
+#: models.py:42
 msgid "If enabled, the form can only be reached via a secret URL."
-msgstr "Si está habilitado, el formulario solo puede ser alcanzado a través de una URL secreta"
+msgstr ""
+"Si está habilitado, el formulario solo puede ser alcanzado a través de una "
+"URL secreta"
 
-#: models.py:39
+#: models.py:45
 msgid "Title"
 msgstr "Título"
 
-#: models.py:40
+#: models.py:46
 msgid "Body"
 msgstr "Cuerpo"
 
-#: models.py:41
+#: models.py:47
 msgid "Target URL"
 msgstr "URL final"
 
-#: models.py:41
+#: models.py:47
 msgid ""
 "If you leave this empty, the page where the form resides will be requested, "
 "and you can use the mail form and logging features. You can also send data "
@@ -136,193 +139,195 @@ msgid ""
 "create a search form."
 msgstr ""
 
-#: models.py:42
+#: models.py:48
 msgid "Send form data to e-mail address"
 msgstr "Enviar los datos del formulario a una dirección de e-mail"
 
-#: models.py:43
+#: models.py:49
 msgid "Sender address"
 msgstr "Dirección del remitente"
 
-#: models.py:44
+#: models.py:50
 msgid "e-Mail subject"
 msgstr "Asunto del e-mail"
 
-#: models.py:45
+#: models.py:51
 msgid "Send uploaded files as email attachments"
 msgstr "Enviar archivos adjuntos al e-mail"
 
-#: models.py:46
+#: models.py:52
 msgid "Method"
 msgstr "Metodo"
 
-#: models.py:47
+#: models.py:53
 msgid "Success message"
 msgstr "Mensaje de exito"
 
-#: models.py:48
+#: models.py:54
 msgid "Error message"
 msgstr "Mensaje de error"
 
-#: models.py:49
+#: models.py:55
 msgid "Submit button label"
 msgstr "Etiqueta el botón de envio"
 
-#: models.py:50
+#: models.py:56
 msgid "Log form data"
 msgstr ""
 
-#: models.py:50
+#: models.py:56
 msgid "Logs all form submissions to the database."
 msgstr ""
 
-#: models.py:51
+#: models.py:57
 msgid "Save uploaded files"
 msgstr "Guardar archivos de subida"
 
-#: models.py:51
+#: models.py:57
 msgid "Saves all uploaded files using server storage."
-msgstr "Guarda todos los archivos subidos mediante el almacenamiento del servidor."
+msgstr ""
+"Guarda todos los archivos subidos mediante el almacenamiento del servidor."
 
-#: models.py:52
+#: models.py:58
 msgid "HTTP redirect after successful submission"
 msgstr "Redirección HTTP trás el envío satisfactorio"
 
-#: models.py:53
+#: models.py:59
 msgid "Clear form after successful submission"
 msgstr "Limpiar formulario trás envío satisfactorio"
 
-#: models.py:54
+#: models.py:60
 msgid "Allow initial values via URL"
 msgstr "Permitir valores iniciales vía URL"
 
-#: models.py:54
+#: models.py:60
 msgid ""
 "If enabled, you can fill in form fields by adding them to the query string."
 msgstr ""
-"Si está activado, puede rellenar campos de formulario mediante su inclusión en la cadena de consulta."
+"Si está activado, puede rellenar campos de formulario mediante su inclusión "
+"en la cadena de consulta."
 
-#: models.py:55
+#: models.py:61
 msgid "Message template"
-msgstr ""
+msgstr "Plantilla del mensaje"
 
-#: models.py:55
+#: models.py:61
 msgid ""
-"Your form fields are available as template context. Example: \"{{ message }}"
-"\" if you have a field named `message`. To iterate over all fields, use the "
-"variable `data` (a list containing a dictionary for each form field, each "
-"containing the elements `name`, `label`, `value`)."
+"Your form fields are available as template context. Example: "
+"\"{{ message }}\" if you have a field named `message`. To iterate over all "
+"fields, use the variable `data` (a list containing a dictionary for each "
+"form field, each containing the elements `name`, `label`, `value`)."
 msgstr ""
 
-#: models.py:56
+#: models.py:62
 msgid "Form template"
-msgstr ""
+msgstr "Plantilla del formulario"
 
-#: models.py:57
+#: models.py:63
 msgid "Display logged submissions with form"
 msgstr ""
 
-#: models.py:61
+#: models.py:69
 msgid "Forms"
 msgstr "Formularios"
 
-#: models.py:116 models.py:215 models.py:307
+#: models.py:128 models.py:231
 msgid "Fields"
 msgstr "Campos"
 
-#: models.py:177
+#: models.py:189
 msgid "Form log"
-msgstr ""
+msgstr "Log del formulario"
 
-#: models.py:178
+#: models.py:190
 msgid "Form logs"
-msgstr ""
+msgstr "Logs del formulario"
 
-#: models.py:184
+#: models.py:198
 msgid "Field class"
-msgstr ""
+msgstr "Clase del campo"
 
-#: models.py:185
+#: models.py:199
 msgid "Position"
 msgstr "Posición"
 
-#: models.py:188
+#: models.py:202
 msgid "Label"
 msgstr "Etiqueta"
 
-#: models.py:189
+#: models.py:203
 msgid "Required"
 msgstr "Obligatorio"
 
-#: models.py:190
+#: models.py:204
 msgid "Include in result"
 msgstr "Incluir en resultado"
 
-#: models.py:191
+#: models.py:205
 msgid "Widget"
 msgstr "Widget"
 
-#: models.py:192
+#: models.py:206
 msgid "Initial value"
 msgstr "Valor inicial"
 
-#: models.py:193
+#: models.py:207
 msgid "Help text"
 msgstr "Texto de ayuda"
 
-#: models.py:195
+#: models.py:209
 msgid "Values"
 msgstr "Valores"
 
-#: models.py:195
+#: models.py:209
 msgid "One value per line"
 msgstr "Un valor por línea"
 
-#: models.py:196
+#: models.py:210
 msgid "Labels"
 msgstr "Etiquetas"
 
-#: models.py:196
+#: models.py:210
 msgid "One label per line"
 msgstr "Una etiqueta por línea"
 
-#: models.py:198
+#: models.py:212
 msgid "Max. length"
 msgstr "Max. longitud"
 
-#: models.py:199
+#: models.py:213
 msgid "Min. length"
 msgstr "Min. longitud"
 
-#: models.py:200
+#: models.py:214
 msgid "Max. value"
 msgstr "Max. valor"
 
-#: models.py:201
+#: models.py:215
 msgid "Min. value"
 msgstr "Min. valor"
 
-#: models.py:202
+#: models.py:216
 msgid "Max. digits"
 msgstr "Max. digitos"
 
-#: models.py:203
+#: models.py:217
 msgid "Decimal places"
 msgstr "Decimales"
 
-#: models.py:205
+#: models.py:219
 msgid "Regular Expression"
 msgstr "Expresión regular"
 
-#: models.py:208
+#: models.py:222
 msgid "Data model"
 msgstr "Modelo de datos"
 
-#: models.py:209
+#: models.py:223
 msgid "Empty label"
 msgstr "Etiqueta vacía"
 
-#: models.py:214 models.py:306
+#: models.py:230
 msgid "Field"
 msgstr "Campo"
 
@@ -364,7 +369,7 @@ msgstr "Opciones"
 
 #: settings.py:18
 msgid "Multiple Choice"
-msgstr ""
+msgstr "Opciones múltiples"
 
 #: settings.py:19
 msgid "Model Choice"
@@ -431,15 +436,20 @@ msgstr "Este archivo no es del tipo permitido."
 msgid ""
 "Please keep file size under %(max_upload_size)s. Current size is %(size)s."
 msgstr ""
-"Por favor mantenga el tamaño del archivo por debajo de %(max_upload_size)s. El tamaño actual es %(size)s."
+"Por favor mantenga el tamaño del archivo por debajo de %(max_upload_size)s. "
+"El tamaño actual es %(size)s."
 
-#: views.py:24
+#: views.py:22
 msgid "Thank you, the data was submitted successfully."
 msgstr "Gracias, los datos han sido enviados satisfactoriamente."
 
-#: views.py:25
+#: views.py:23
 msgid "The data could not be submitted, please try again."
 msgstr "Los datos no han podido ser enviados, por favor pruebe de nuevo."
+
+#: views.py:125
+msgid "Form save successfully"
+msgstr "Formulario guardado correctamente"
 
 #: templates/admin/form_designer/formlog/change_list.html:9
 msgid "Export CSV"
@@ -448,6 +458,38 @@ msgstr "Exportar a CSV"
 #: templates/admin/form_designer/formlog/change_list.html:16
 msgid "Export XLS"
 msgstr "Exportar a XLS"
+
+#: templates/html/formdefinition/base_edit.html:52
+msgid "Add Field"
+msgstr "Añadir campo"
+
+#: templates/html/formdefinition/base_edit.html:53
+msgid "Field Settings"
+msgstr "Configuración del campo"
+
+#: templates/html/formdefinition/base_edit.html:54
+msgid "Form Settings"
+msgstr "Configuración"
+
+#: templates/html/formdefinition/base_edit.html:57
+msgid "Standard Fields"
+msgstr "Campos estándar"
+
+#: templates/html/formdefinition/base_edit.html:60
+msgid "Fancy Fields"
+msgstr "Campos complejos"
+
+#: templates/html/formdefinition/base_edit.html:73
+msgid "Language"
+msgstr "Lenguaje"
+
+#: templates/html/formdefinition/base_edit.html:92
+msgid "Start adding some fields from the menu on the left."
+msgstr "Empieza a añadir algunos campos del menú de la izquierda"
+
+#: templates/html/formdefinition/base_edit.html:96
+msgid "delete this widget"
+msgstr "borrar este control"
 
 #: templates/html/formdefinition/forms/includes/submit.html:2
 msgid "Submit"
