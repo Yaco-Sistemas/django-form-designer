@@ -5,6 +5,8 @@ from django.forms import widgets
 from django.conf import settings as django_settings
 from django.utils.translation import ugettext as _
 
+from transmeta import get_fallback_fieldname
+
 from form_designer import settings
 from form_designer.models import get_class, FormDefinitionField, FormDefinition
 from form_designer.uploads import clean_files
@@ -21,10 +23,11 @@ class DesignedForm(forms.Form):
 
     def add_defined_field(self, def_field, initial_data=None):
         if initial_data and initial_data.has_key(def_field.name):
+            initial_fieldname = get_fallback_fieldname('initial')
             if not def_field.field_class in ('django.forms.MultipleChoiceField', 'django.forms.ModelMultipleChoiceField'):
-                def_field.initial = initial_data.get(def_field.name)
+                setattr(def_field, initial_fieldname, initial_data.get(def_field.name))
             else:
-                def_field.initial = initial_data.getlist(def_field.name)
+                setattr(def_field, initial_fieldname, initial_data.getlist(def_field.name))
         field_class = get_class(def_field.field_class)
         field = field_class(**def_field.get_form_field_init_args(field_class))
         self.fields[def_field.name] = field
