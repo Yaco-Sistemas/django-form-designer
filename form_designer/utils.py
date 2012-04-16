@@ -53,7 +53,7 @@ def from_jquery_to_django_forms(form, form_data):
         setattr(field, transmeta.get_fallback_fieldname('label'), field_settings_lang.get('label', ''))
         setattr(field, transmeta.get_fallback_fieldname('help_text'), field_settings_lang.get('description', ''))
         setattr(field, transmeta.get_fallback_fieldname('initial'), field_settings_lang.get('value', ''))
-        field.required = field_settings_lang.get('required', False)
+        field.required = field_settings.get('required', False)
 
         options = field_settings.get('options', [])
         if options:
