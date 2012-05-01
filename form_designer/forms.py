@@ -32,6 +32,10 @@ class DesignedForm(forms.Form):
         field = field_class(**def_field.get_form_field_init_args(field_class))
         self.fields[def_field.name] = field
         if isinstance(field, forms.FileField):
+            field_settings_lang = def_field.form_builder_settings['settings'][django_settings.LANGUAGE_CODE]
+            title = field_settings_lang.get('title', None)
+            if title:
+                self.fields['%s_title' % def_field.name] = forms.CharField(initial=title, widget=forms.HiddenInput)
             self.file_fields.append(def_field)
 
     def clean(self):

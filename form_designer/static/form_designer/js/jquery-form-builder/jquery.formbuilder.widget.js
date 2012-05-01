@@ -42,6 +42,7 @@ var FbWidget = {
                 'Middle': "Centrado",
                 'Bottom': "Abajo",
                 'Name': "Nombre",
+                'Title': "Título",
                 'Bold': "Negrita",
                 'Italic': "Cursiva",
                 'Underline': "Subrayado",

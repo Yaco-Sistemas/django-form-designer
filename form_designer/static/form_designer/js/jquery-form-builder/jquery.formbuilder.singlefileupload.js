@@ -24,6 +24,7 @@ var FbSingleFileUpload = $.extend({}, $.fb.fbWidget.prototype, {
             en: {
                 label: 'Single File Upload',
                 description: '',
+                title: '',
                 styles: {
                     fontFamily: 'default', // form builder default
                     fontSize: 'default',
@@ -33,6 +34,7 @@ var FbSingleFileUpload = $.extend({}, $.fb.fbWidget.prototype, {
             es: {
                 label: 'Subida de un único fichero',
                 description: '',
+                title: '',
                 styles: {
                     fontFamily: 'default', // form builder default
                     fontSize: 'default',
@@ -90,6 +92,15 @@ var FbSingleFileUpload = $.extend({}, $.fb.fbWidget.prototype, {
             var value = $(this).val();
             fb.target._updateName(fb.item, value);
         });
+        var $title = fb.target._label({ label: $.fb.fbWidget.prototype.translate('Title'), name: 'field.title' })
+                              .append('<input type="text" id="field.title" />');
+        $('input', $title).val(fb.settings.title)
+         .keyup(function(event) {
+          var value = $(this).val();
+          fb.item.find('.textInput').val(value);
+          fb.settings.title = value;
+          fb.target._updateSettings(fb.item);
+        });  
         var $description = fb.target._label({
             label: $.fb.fbWidget.prototype.translate('Description'),
             name: 'field.description'
@@ -164,7 +175,7 @@ var FbSingleFileUpload = $.extend({}, $.fb.fbWidget.prototype, {
             fb.target._updateSettings(fb.item);
         });
         fb.target._log('fbSingleFileUpload._getFieldSettingsLanguageSection executed.');
-        return [fb.target._twoColumns($label, $name), fb.target._oneColumn($description), $fontPanel];
+        return [fb.target._twoColumns($label, $name), fb.target._oneColumn($title), fb.target._oneColumn($description), $fontPanel];
     },
     _getFieldSettingsGeneralSection : function(event, fb) {
         fb.target._log('fbSingleFileUpload._getFieldSettingsGeneralSection executing...');

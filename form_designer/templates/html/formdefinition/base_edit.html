@@ -97,47 +97,55 @@
                     </a>
                     <div class="{{field.type}} {% if field.dict_settings.es.classes %}{% for class in  field.dict_settings.es.classes %}{{ class }} {% endfor %}{% endif %}">
                         {% if field.type == 'SingleLineText' %}
-                        <label><em>{% if field.dict_settings.required %}*{% endif %}</em><span>{{ field.dict_settings.es.label }}</span></label>
-                        <input type="text" class="textInput" value="{{ field.dict_settings.es.value }}" />
-                        <p class="formHint">{{ field.dict_settings.es.description }}</p>
-                        {% endif %}{% if field.type == 'SingleFileUpload' %}
-                        <label><em>{% if field.dict_settings.required %}*{% endif %}</em><span>{{ field.dict_settings.es.label }}</span></label>
-                        <input type="file" class="fielUpload" id="fields[{{ forloop.counter0 }}].id" />
-                        <p class="formHint">{{ field.dict_settings.es.description }}</p>
-                        {% endif %}{% if field.type == 'CheckBox' %}
-                        <label><em>{% if field.dict_settings.required %}*{% endif %}</em><span>{{ field.dict_settings.es.label }}</span></label>
-                        <input type="checkbox" />
-                        <p class="formHint">{{ field.dict_settings.es.description }}</p>
-                        {% endif %}{% if field.type == 'PlainText' %}
-                        {{ field.dict_settings.es.text }}
-                        {% endif %}{% if field.type == 'Select' %}
-                        <label><em>{% if field.dict_settings.required %}*{% endif %}</em><span>{{ field.dict_settings.es.label }}</span></label>
-                        <select class="select">
-                            {% for opt in field.dict_settings.options %}
-                            <option value="{{ opt.1 }}">{{ opt.0 }}</option>
-                            {% endfor %}
-                        <select/>
-                        <p class="formHint">{{ field.dict_settings.es.description }}</p>
-                        {% endif %}{% if field.type == 'Date' %}
-                        <label><em>{% if field.dict_settings.required %}*{% endif %}</em><span>{{ field.dict_settings.es.label }}</span></label>
-                        <input type="text" class="textInput" value="{{ field.dict_settings.es.value }}" />
-                        <p class="formHint">{{ field.dict_settings.es.description }}</p>
-                        {% endif %}{% if field.type == 'Email' %}
-                        <label><em>{% if field.dict_settings.required %}*{% endif %}</em><span>{{ field.dict_settings.es.label }}</span></label>
-                        <input type="text" class="textInput" value="{{ field.dict_settings.es.value }}" />
-                        <p class="formHint">{{ field.dict_settings.es.description }}</p>
-                        {% endif %}{% if field.type == 'TextField' %}
-                        <label><em>{% if field.dict_settings.required %}*{% endif %}</em><span>{{ field.dict_settings.es.label }}</span></label>
-                        <textarea></textarea>
-                        <p class="formHint">{{ field.dict_settings.es.description }}</p>
-                        {% endif %}{% if field.type == 'Radio' %}
-                        <label><em>{% if field.dict_settings.required %}*{% endif %}</em><span>{{ field.dict_settings.es.label }}</span></label>
-                        <div class="radioContainer">
-                            {% for rad in field.dict_settings.radios %}
-                            <input type="radio" value="{{ rad.1 }}"/> {{ rad.0 }}<br/>
-                            {% endfor %}
-                        </div>
-                        <p class="formHint">{{ field.dict_settings.es.description }}</p>
+                            <label><em>{% if field.dict_settings.required %}*{% endif %}</em><span>{{ field.dict_settings.es.label }}</span></label>
+                            <input type="text" class="textInput" value="{{ field.dict_settings.es.value }}" />
+                            <p class="formHint">{{ field.dict_settings.es.description }}</p>
+                            {% endif %}
+                        {% if field.type == 'SingleFileUpload' %}
+                            <label><em>{% if field.dict_settings.required %}*{% endif %}</em><span>{{ field.dict_settings.es.label }}</span></label>
+                            <input type="file" class="fielUpload" id="fields[{{ forloop.counter0 }}].id" />
+                            <p class="formHint">{{ field.dict_settings.es.description }}</p>
+                            {% endif %}
+                        {% if field.type == 'CheckBox' %}
+                            <label><em>{% if field.dict_settings.required %}*{% endif %}</em><span>{{ field.dict_settings.es.label }}</span></label>
+                            <input type="checkbox" />
+                            <p class="formHint">{{ field.dict_settings.es.description }}</p>
+                            {% endif %}
+                        {% if field.type == 'PlainText' %}
+                            {{ field.dict_settings.es.text }}
+                        {% endif %}
+                        {% if field.type == 'Select' %}
+                            <label><em>{% if field.dict_settings.required %}*{% endif %}</em><span>{{ field.dict_settings.es.label }}</span></label>
+                            <select class="select">
+                                {% for opt in field.dict_settings.options %}
+                                <option value="{{ opt.1 }}">{{ opt.0 }}</option>
+                                {% endfor %}
+                            </select>
+                            <p class="formHint">{{ field.dict_settings.es.description }}</p>
+                        {% endif %}
+                        {% if field.type == 'Date' %}
+                            <label><em>{% if field.dict_settings.required %}*{% endif %}</em><span>{{ field.dict_settings.es.label }}</span></label>
+                            <input type="text" class="textInput" value="{{ field.dict_settings.es.value }}" />
+                            <p class="formHint">{{ field.dict_settings.es.description }}</p>
+                        {% endif %}
+                        {% if field.type == 'Email' %}
+                            <label><em>{% if field.dict_settings.required %}*{% endif %}</em><span>{{ field.dict_settings.es.label }}</span></label>
+                            <input type="text" class="textInput" value="{{ field.dict_settings.es.value }}" />
+                            <p class="formHint">{{ field.dict_settings.es.description }}</p>
+                        {% endif %}
+                        {% if field.type == 'TextField' %}
+                            <label><em>{% if field.dict_settings.required %}*{% endif %}</em><span>{{ field.dict_settings.es.label }}</span></label>
+                            <textarea></textarea>
+                            <p class="formHint">{{ field.dict_settings.es.description }}</p>
+                        {% endif %}
+                        {% if field.type == 'Radio' %}
+                            <label><em>{% if field.dict_settings.required %}*{% endif %}</em><span>{{ field.dict_settings.es.label }}</span></label>
+                            <div class="radioContainer">
+                                {% for rad in field.dict_settings.radios %}
+                                    <input type="radio" value="{{ rad.1 }}"/> {{ rad.0 }}<br/>
+                                {% endfor %}
+                            </div>
+                            <p class="formHint">{{ field.dict_settings.es.description }}</p>
                         {% endif %}
                     </div>
                     <div class="fieldProperties">
