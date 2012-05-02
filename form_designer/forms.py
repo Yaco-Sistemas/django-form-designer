@@ -22,7 +22,8 @@ class DesignedForm(forms.Form):
         self.fields[form_definition.submit_flag_name] = forms.BooleanField(required=False, initial=1, widget=widgets.HiddenInput)
 
     def add_defined_field(self, def_field, initial_data=None):
-        if initial_data and initial_data.has_key(def_field.name):
+        no_read_activiti = def_field.form_builder_settings['settings'].get('noReadActiviti', False)
+        if initial_data and not no_read_activiti and initial_data.has_key(def_field.name):
             initial_fieldname = get_fallback_fieldname('initial')
             if not def_field.field_class in ('django.forms.MultipleChoiceField', 'django.forms.ModelMultipleChoiceField'):
                 setattr(def_field, initial_fieldname, initial_data.get(def_field.name))
