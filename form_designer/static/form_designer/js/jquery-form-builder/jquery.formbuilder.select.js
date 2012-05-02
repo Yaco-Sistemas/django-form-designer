@@ -41,8 +41,8 @@ var FbSelect = $.extend({}, $.fb.fbWidget.prototype, {
             },
             required: false,
             readonly: false,
-            no_read_activiti: false,
-            no_write_activiti: false,
+            noReadActiviti: false,
+            noWriteActiviti: false,
             options: [],
             styles: {
                 label: {
@@ -230,26 +230,26 @@ var FbSelect = $.extend({}, $.fb.fbWidget.prototype, {
             fb.target._updateSettings(fb.item);
         });
 
-        var $no_read_activiti = $('<div><input type="checkbox" id="field.no_read_activiti" />&nbsp;' + $.fb.fbWidget.prototype.translate('Do not read from activiti') + '</div>');
-        var $no_write_activiti = $('<div><input type="checkbox" id="field.no_write_activiti" />&nbsp;' + $.fb.fbWidget.prototype.translate('Do not write to activiti') + '</div>');
+        var $noReadActiviti = $('<div><input type="checkbox" id="field.noReadActiviti" />&nbsp;' + $.fb.fbWidget.prototype.translate('Do not read from activiti') + '</div>');
+        var $noWriteActiviti = $('<div><input type="checkbox" id="field.noWriteActiviti" />&nbsp;' + $.fb.fbWidget.prototype.translate('Do not write to activiti') + '</div>');
         var $activitiPanel = fb.target._fieldset({ text: $.fb.fbWidget.prototype.translate('Activiti')})
-                          .append(fb.target._oneColumn($no_read_activiti)).append(fb.target._oneColumn($no_write_activiti));
+                          .append(fb.target._oneColumn($noReadActiviti)).append(fb.target._oneColumn($noWriteActiviti));
 
-        $('input', $no_read_activiti).attr('checked', fb.settings.no_read_activiti || this.options.settings.no_read_activiti).change(function(event) {
+        $('input', $noReadActiviti).attr('checked', fb.settings.noReadActiviti || this.options.settings.noReadActiviti).change(function(event) {
             if ($(this).attr('checked')) {
                 fb.item.find('em').text('*');
-                fb.settings.no_read_activiti = true;
+                fb.settings.noReadActiviti = true;
             } else {
                 fb.item.find('em').text('');
-                fb.settings.no_read_activiti = false;
+                fb.settings.noReadActiviti = false;
             }
             fb.target._updateSettings(fb.item);
         });
-        $('input', $no_write_activiti).attr('checked', fb.settings.no_write_activiti || this.options.settings.no_write_activiti).change(function(event) {
+        $('input', $noWriteActiviti).attr('checked', fb.settings.noWriteActiviti || this.options.settings.noWriteActiviti).change(function(event) {
             if ($(this).attr('checked')) {
-                fb.settings.no_write_activiti = true;
+                fb.settings.noWriteActiviti = true;
             } else {
-                fb.settings.no_write_activiti = false;
+                fb.settings.noWriteActiviti = false;
             }
             fb.target._updateSettings(fb.item);
         }); 
