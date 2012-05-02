@@ -63,6 +63,8 @@ var FbWidget = {
                 'letters only': "sólo letras",
                 'Options': "Opciones",
                 'Language': "Lenguaje",
+                'Do not read from activiti': "No leer de activiti",
+                'Do not write to activiti': "No guardar en activiti",
                 "The field name must only contain letters, numbers and the sign _. It must begin with a letter or the sign _": "El campo nombre debe contener únicamente letras, números y el signo _. Debe comenzar con una letra o el signo _"
             });
         }
