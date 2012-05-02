@@ -94,7 +94,7 @@ var FbSingleFileUpload = $.extend({}, $.fb.fbWidget.prototype, {
         });
         var $title = fb.target._label({ label: $.fb.fbWidget.prototype.translate('Title'), name: 'field.title' })
                               .append('<input type="text" id="field.title" />');
-        $('input', $title).val(fb.settings.title)
+        $('input', $title).val(fb.settings.title || this.options.settings.en.title)
          .keyup(function(event) {
           var value = $(this).val();
           fb.item.find('.textInput').val(value);
