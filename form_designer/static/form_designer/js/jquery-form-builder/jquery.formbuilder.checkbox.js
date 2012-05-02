@@ -41,6 +41,8 @@ var FbCheckBox = $.extend({}, $.fb.fbWidget.prototype, {
             },
             required: false,
             readonly: false,
+            no_read_activiti: false,
+            no_write_activiti: false,
             styles: {
                 label: {
                     color: 'default',
@@ -196,6 +198,31 @@ var FbCheckBox = $.extend({}, $.fb.fbWidget.prototype, {
             fb.target._updateSettings(fb.item);
         });
 
+        var $no_read_activiti = $('<div><input type="checkbox" id="field.no_read_activiti" />&nbsp;' + $.fb.fbWidget.prototype.translate('Do not read from activiti') + '</div>');
+        var $no_write_activiti = $('<div><input type="checkbox" id="field.no_write_activiti" />&nbsp;' + $.fb.fbWidget.prototype.translate('Do not write to activiti') + '</div>');
+        var $activitiPanel = fb.target._fieldset({ text: $.fb.fbWidget.prototype.translate('Activiti')})
+                          .append(fb.target._oneColumn($no_read_activiti)).append(fb.target._oneColumn($no_write_activiti));
+
+        $('input', $no_read_activiti).attr('checked', fb.settings.no_read_activiti || this.options.settings.no_read_activiti).change(function(event) {
+            if ($(this).attr('checked')) {
+                fb.item.find('em').text('*');
+                fb.settings.no_read_activiti = true;
+            } else {
+                fb.item.find('em').text('');
+                fb.settings.no_read_activiti = false;
+            }
+            fb.target._updateSettings(fb.item);
+        });
+        $('input', $no_write_activiti).attr('checked', fb.settings.no_write_activiti || this.options.settings.no_write_activiti).change(function(event) {
+            if ($(this).attr('checked')) {
+                fb.settings.no_write_activiti = true;
+            } else {
+                fb.settings.no_write_activiti = false;
+            }
+            fb.target._updateSettings(fb.item);
+        }); 
+
+
         var styles = fb.settings.styles;
         var $colorPanel = fb.target._labelValueDescriptionColorPanel(styles);
 
@@ -227,7 +254,7 @@ var FbCheckBox = $.extend({}, $.fb.fbWidget.prototype, {
             fb.target._updateSettings(fb.item);
         });
         fb.target._log('fbCheckBox._getFieldSettingsGeneralSection executed.');
-        return [$valuePanel, $colorPanel];
+        return [$valuePanel, $activitiPanel, $colorPanel];
     },
     _languageChange : function(event, fb) {
         fb.target._log('fbCheckBox.languageChange executing...');
