@@ -85,6 +85,7 @@
     </div>
     <form id="builderForm" method="POST" action="{% url form_designer_save form_definition.name %}" class="uniForm">
         <input type="hidden" id="name" name="name" />
+        <input type="hidden" id="title" name="title" value="{{ form_definition.title }}"/>
         <input type="hidden" id="settings" name="settings" />
         <div id="builderPanel">
             <div class="formHeading"></div>

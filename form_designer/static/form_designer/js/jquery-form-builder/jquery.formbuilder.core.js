@@ -43,7 +43,7 @@ var FormBuilder = {
 				}			
 			},
             es: {
-                name: 'Formulario',
+                name: 'Formularioaaa',
                 classes: ['leftAlign'],
                 heading: 'h2',
                 styles: {
@@ -326,6 +326,7 @@ var FormBuilder = {
 	  var settings;
 	  var $this = this;
 	  var $formHeading = $('.formHeading', $builderPanel);
+      var title = $('#builderForm #title').val()
 	  var $settings = $('#settings', $builderForm);
 		// first creation
 		if ($settings.val() == '') {
@@ -333,7 +334,7 @@ var FormBuilder = {
 		  for (var i = 0; i < options._languages.length; i++) {
 			   options.settings[options._languages[i]].name += ' ' + options.formCounter;
 		    }
-		  $formHeading.addClass(settings.classes[0]).append('<' + settings.heading + ' class="heading">' + settings.name + '</' + settings.heading + '>');
+		  $formHeading.addClass(settings.classes[0]).append('<' + settings.heading + ' class="heading">' + title + '</' + settings.heading + '>');
 		  $('#name',$builderForm).val($fbWidget._propertyName(options.settings['en'].name));
 		  $this._updateSettings($this);
 		} else {
@@ -342,9 +343,8 @@ var FormBuilder = {
 		}	  
 		
 		$fbWidget._log('settings.name = ' + settings.name);
-	  
 		var $name = $fbWidget._label({ label: $(this)[0].translate('Name'), name: 'form.name' })
-		       .append('<input type="text" id="form.name" value="' + settings.name + '" />');
+		       .append('<input type="text" id="form.name" value="' + title + '" />');
 		$('input', $name).keyup(function(event) {
 				var value = $(this).val();
 				$fbWidget._log('options.disabledNameChange = ' + options.disabledNameChange);
