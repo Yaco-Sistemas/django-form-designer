@@ -43,7 +43,7 @@ var FormBuilder = {
 				}			
 			},
             es: {
-                name: 'Formularioaaa',
+                name: 'Formulario',
                 classes: ['leftAlign'],
                 heading: 'h2',
                 styles: {
