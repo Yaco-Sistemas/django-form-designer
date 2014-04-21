@@ -224,7 +224,7 @@ var FbRadio = $.extend({}, $.fb.fbWidget.prototype, {
             }
         });
         $('#resetRadiosButton', $addRadio).css('cursor', 'pointer').css('float', 'right').css('text-decoration', 'underline').css('margin-top', '10px').click(function(event) {
-            radioContainer = fb.item.find('radioContainer').text('');
+            radioContainer = fb.item.find('.radioContainer').text('');
             fb.settings.radios = [];
             fb.target._updateSettings(fb.item);
         });
