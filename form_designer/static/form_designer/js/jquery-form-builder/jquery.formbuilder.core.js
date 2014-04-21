@@ -329,11 +329,14 @@ var FormBuilder = {
       var title = $('#builderForm #title').val()
 	  var $settings = $('#settings', $builderForm);
 		// first creation
+        //!!! TODO: We should have settings filled, but he have not!
 		if ($settings.val() == '') {
 			settings = options.settings[$language.val()];
-		  for (var i = 0; i < options._languages.length; i++) {
-			   options.settings[options._languages[i]].name += ' ' + options.formCounter;
-		    }
+            settings['name'] = title;
+        // TODO: Disable formCounter for now
+		//  for (var i = 0; i < options._languages.length; i++) {
+		//	   options.settings[options._languages[i]].name += ' ' + options.formCounter;
+		//    }
 		  $formHeading.addClass(settings.classes[0]).append('<' + settings.heading + ' class="heading">' + title + '</' + settings.heading + '>');
 		  $('#name',$builderForm).val($fbWidget._propertyName(options.settings['en'].name));
 		  $this._updateSettings($this);
