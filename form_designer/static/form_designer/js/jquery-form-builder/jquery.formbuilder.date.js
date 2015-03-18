@@ -12,7 +12,7 @@
 
 var FbDate = $.extend({}, $.fb.fbWidget.prototype, {
 	options: { // default options. values are stored in widget's prototype
-		name: 'Date',
+		name: 'Fecha',
 		belongsTo: $.fb.formbuilder.prototype.options._standardFieldsPanel,
 		_type: 'Date',
 		_html : '<div><label><em></em><span></span></label> \

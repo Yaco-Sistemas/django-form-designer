@@ -12,7 +12,7 @@
 
 var FbSingleLineText = $.extend({}, $.fb.fbWidget.prototype, {
 	options: { // default options. values are stored in widget's prototype
-		name: 'Single Line Text',
+		name: 'Texto en 1 línea',
 		belongsTo: $.fb.formbuilder.prototype.options._standardFieldsPanel,
 		_type: 'SingleLineText',
 		_html : '<div><label><em></em><span></span></label> \

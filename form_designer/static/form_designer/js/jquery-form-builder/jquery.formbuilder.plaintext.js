@@ -13,7 +13,7 @@
 // extends/inherits from superclass: FbWidget
 var FbPlainText = $.extend({}, $.fb.fbWidget.prototype, {
 	options : { // default options. values are stored in widget's prototype
-		name : 'Plain Text',
+		name : 'Texto plano',
 		belongsTo : $.fb.formbuilder.prototype.options._fancyFieldsPanel,
 		_type : 'PlainText',
 		_html : '<div class="PlainText"></div>',

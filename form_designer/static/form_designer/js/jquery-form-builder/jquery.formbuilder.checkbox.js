@@ -12,7 +12,7 @@
 
 var FbCheckBox = $.extend({}, $.fb.fbWidget.prototype, {
     options: { // default options. values are stored in widget's prototype
-        name: 'Check Box',
+        name: 'Casilla',
         belongsTo: $.fb.formbuilder.prototype.options._standardFieldsPanel,
         _type: 'CheckBox',
         _html: '<div><label><em></em><span></span></label> \

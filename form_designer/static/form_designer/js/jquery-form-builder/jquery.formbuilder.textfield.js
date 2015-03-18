@@ -12,7 +12,7 @@
 
 var FbTextField = $.extend({}, $.fb.fbWidget.prototype, {
 	options: { // default options. values are stored in widget's prototype
-		name: 'Text Field',
+		name: 'Texto',
 		belongsTo: $.fb.formbuilder.prototype.options._standardFieldsPanel,
 		_type: 'TextField',
 		_html : '<div><label><em></em><span></span></label> \

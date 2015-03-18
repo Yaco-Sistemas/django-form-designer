@@ -12,7 +12,7 @@
 
 var FbSelect = $.extend({}, $.fb.fbWidget.prototype, {
     options: { // default options. values are stored in widget's prototype
-        name: 'Select',
+        name: 'Selector',
         belongsTo: $.fb.formbuilder.prototype.options._standardFieldsPanel,
         _type: 'Select',
         _html: '<div><label><em></em><span></span></label> \
